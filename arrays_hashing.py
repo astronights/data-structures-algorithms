@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 
 class ArrayHashing:
 	# Arrays and Hashing Solutions
@@ -59,3 +59,25 @@ class ArrayHashing:
 				return [pos[rem], ix]
 			pos[num] = ix
 		return [-1, -1]
+
+	def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+		'''Group anagrams from list of strings together
+
+  		Space Complexity: O(n*m) -> String Mapping Dictionary
+    		Time Complexity: O(n*m log m) -> List iteration + Sorting
+
+      		Values: Number of strings (n), Max Length of String (m)
+
+  		Args:
+    			strs (list): List of strings
+
+       		Returns:
+	 		values (list): List of grouped strings
+    		'''
+	        groups = defaultdict(list)
+		
+	        for s in strs:
+	            ss = ''.join(sorted(s))
+	            groups[ss].append(s)
+	
+	        return groups.values()
