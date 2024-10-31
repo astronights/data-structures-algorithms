@@ -64,7 +64,7 @@ class ArrayHashing:
 		'''Group anagrams from list of strings together
 
   		Space Complexity: O(n*m) -> String Mapping Dictionary
-    		Time Complexity: O(n*m log m) -> List iteration + Sorting
+    		Time Complexity: O(n*m) -> List iteration + Frequency Tuple
 
       		Values: Number of strings (n), Max Length of String (m)
 
@@ -77,7 +77,11 @@ class ArrayHashing:
 	        groups = defaultdict(list)
 		
 	        for s in strs:
-	            ss = ''.join(sorted(s))
-	            groups[ss].append(s)
+			# Building string representation as frequency tuple of characters
+			counter = [0] * 26
+	            	for c in s:
+				ix = ord(c) - ord('a')
+				counter[ix] += 1
+			groups[tuple(counter)].append(s)
 	
 	        return groups.values()
