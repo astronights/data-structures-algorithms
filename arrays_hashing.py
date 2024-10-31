@@ -85,3 +85,29 @@ class ArrayHashing:
 			groups[tuple(counter)].append(s)
 	
 	        return groups.values()
+
+	def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+		'''Get Top K Frequent Elements from list
+
+  		Args:
+    			nums (list): Iterable of numbers
+       			k (int): Threshold value
+
+		Returns:
+  			res (list): Top K Frequent Elements
+     		'''
+		count = {}
+		freq = [[] for i in range(len(nums)+1)]
+
+		# Bucket sort numbers
+		for num in nums:
+	        	count[num] = 1 + count.get(num, 0)
+	        for num, cnt in count.items():
+	        	freq[cnt].append(num)
+	
+	        res = []
+	        for i in range(len(freq)-1, -1, -1):
+	        	for num in freq[i]:
+	        		res.append(num)
+	                	if len(res) == k:
+	                    		return res
