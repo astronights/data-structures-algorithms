@@ -36,4 +36,26 @@ class ArrayHashing:
  		Returns:
    			is_same (bool): If the two strings are anagrams
 	  	'''
-        return Counter(s) == Counter(t)
+        	return Counter(s) == Counter(t)
+
+	def twoSum(self, nums: List[int], target: int) -> List[int]:
+		'''Get indices of elements that sum to target
+
+  		Space Complexity: O(n) -> Value Position Dictionary
+    		Time Complexity: O(n) -> Creating dictionary. Dict IO is O(1)
+
+      		Args:
+			nums (list): Iterable of numbers
+   			target (int): Sum value
+
+      		Returns:
+			indices (list): Indices of the two elements
+   		'''
+	        pos = {}
+		
+	        for ix, num in enumerate(nums):
+			rem = target - num
+		        if rem in pos:
+				return [pos[rem], ix]
+			pos[num] = ix
+		return [-1, -1]
