@@ -138,6 +138,40 @@ class Solutions:
 
         	return [left[i]*right[i] for i in range(N)]
 
+	def isValidSudoku(self, board: List[List[str]]) -> bool:
+		'''Check if a Sudoku is valid
+
+  		Space Complexity: O(n*n) -> Sudoku size
+    		Time Complexity: O(n*n) -> Element iteration
+
+      		Values: Sudoku Dimension (n*n)
+
+ 		Args:
+   			board (list): Sudoku board
+
+      		Returns:
+			is_valid (bool): Sudoku validity
+		'''
+        	rows = defaultdict(set)
+        	cols = defaultdict(set)
+        	squares = defaultdict(set)
+
+	        for r in range(9):
+        		for c in range(9):
+                		cur = board[r][c]
+
+		                if cur == '.':
+			    		continue
+                		if (cur in rows[r] or 
+				    cur in cols[c] or 
+				    cur in squares[(r // 3), (c // 3)]):
+                    			return False
+
+			        rows[r].add(cur)
+				cols[c].add(cur)
+				squares[(r // 3, c // 3)].add(cur)
+        	return True
+
 class StringEncodeDecode:
 	# String Encode Decode
 	
