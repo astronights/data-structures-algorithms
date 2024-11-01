@@ -57,6 +57,41 @@ class Solutions:
                 		else:
                     			stack.append(int(float(b)/a))
         	return stack[-1]
+
+	def generateParenthesis(self, n: int) -> List[str]:
+		'''Generate Parentheses
+
+  		Space Complexity: O(n) -> Stack space
+  		Time Complexity: O(4^n / √n) -> Catalan number DFS
+
+    		Args:
+      			n (int): Number of parentheses to use
+
+  		Returns:
+    			res (list): List of valid parentheses strings
+       		'''
+        	res = []
+        	stack = []
+		
+		def dfs(l: int, r: int) -> None:
+			'''DFS to build parenthesis string
+
+   			Args:
+      				l (int): Number of left parenthesis used
+	  			r (int): Number of right parenthesis used
+      			'''
+            		if l + r == 2*n:
+                		res.append(''.join(stack))
+            		if l < n:
+                		stack.append('(')
+                		dfs(l + 1, r)
+                		stack.pop()
+            		if r < l:
+                		stack.append(')')
+                		dfs(l, r + 1)
+                		stack.pop()
+		dfs(0, 0)
+        	return res
             
 
 
