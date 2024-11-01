@@ -29,6 +29,36 @@ class Solutions:
                 		stack.append(c)
 		return len(stack) == 0
 
+	def evalRPN(self, tokens: List[str]) -> int:
+		'''Evaluate Reverse Polish Notation
+
+  		Space Complexity: O(n) -> Stack
+    		Time Complexity: O(n) -> Iteration
+
+      		Args:
+			tokens (list): Mathematical symbols
+
+   		Returns:
+     			val (int): Result
+		'''
+	        stack = []
+        	for c in tokens:
+            		if c not in '+-*/':
+                		stack.append(int(c))
+            		else:
+				# Pop happens Left to Right
+                		a, b = stack.pop(), stack.pop()
+                		if c == '+':
+                    			stack.append(a+b)
+                		elif c == '-':
+                    			stack.append(b-a)
+                		elif c == '*':
+                    			stack.append(a*b)
+                		else:
+                    			stack.append(int(float(b)/a))
+        	return stack[-1]
+            
+
 
 class MinStack:
 
@@ -37,8 +67,8 @@ class MinStack:
 
 		Space Complexity: O(n) -> Stack Elements
      		'''
-	    self.stack = []
-	    self.min_stack = []
+	    	self.stack = []
+	    	self.min_stack = []
 
    	 def push(self, val: int) -> None:
 		'''Add element to stack
