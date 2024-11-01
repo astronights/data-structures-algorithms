@@ -172,6 +172,29 @@ class Solutions:
 				squares[(r // 3, c // 3)].add(cur)
         	return True
 
+	def longestConsecutive(self, nums: List[int]) -> int:
+		'''Longest Consecutive Subsequence
+
+  		Space Complexity: O(n) -> Set of values
+    		Time Complexity: O(n) -> Single pass over each element
+
+      		Args:
+			nums (list): Iterable of numbers
+
+   		Returns:
+     			res (int): Longest consecutive subsequence
+		'''
+        	res = 0
+		seen = set(nums)
+
+        	for n in nums:
+            		if n - 1 not in seen:
+                		cur = 1
+                		while n + cur in seen:
+	    				cur += 1
+                		res = max(res, cur)
+        	return res
+
 class StringEncodeDecode:
 	# String Encode Decode
 	
