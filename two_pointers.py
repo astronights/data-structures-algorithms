@@ -114,3 +114,30 @@ class Solutions:
             		else:
                 		r -= 1
         	return max_area
+
+	def trap(self, height: List[int]) -> int:
+		'''Amount of trapped rainwater
+
+  		Space Complexity: O(1) -> Pointers + Total
+    		Time Complexity: O(n) -> Iterating over all elements
+
+      		Args:
+			height (list): Heights of container
+
+   		Returns:
+     			rain (int): Total rain water
+		'''
+		rain = 0
+		l, r = 0, len(height) - 1
+		max_L, max_R = height[l], height[r]
+
+		while l < r:
+			if max_L < max_R:
+				l += 1
+				max_L = max(max_L, height[l])
+				rain += max_L - height[l]
+			else:
+				r -= 1
+				max_R = max(max_R, height[r])
+				rain += max_R - height[r]
+		return rain
