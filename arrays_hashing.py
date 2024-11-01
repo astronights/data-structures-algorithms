@@ -117,6 +117,27 @@ class Solutions:
 	                	if len(res) == k:
 	                    		return res
 
+	def productExceptSelf(self, nums: List[int]) -> List[int]:
+		'''Calculate product of array except element
+
+  		Space Complexity: O(n) -> Remainder products
+    		Time Complexity: O(n) -> Array two pass
+
+      		Args:
+			nums (list): Iterable of numbers
+
+     		Returns:
+       			res (list): Product of other elements
+	  	'''
+        	N = len(nums)
+        	left, right = [1] * N, [1] * N
+
+        	for i in range(1, N):
+            		left[i] = left[i-1] * nums[i-1]
+            		right[N-1-i] = right[N-i] * nums[N-i]
+
+        	return [left[i]*right[i] for i in range(N)]
+
 class StringEncodeDecode:
 	# String Encode Decode
 	
