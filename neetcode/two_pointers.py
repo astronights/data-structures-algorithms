@@ -1,5 +1,4 @@
 # Two Pointers Solutions
-from collections import Counter, defaultdict
 
 class Solutions:
 	# Solution Functions
