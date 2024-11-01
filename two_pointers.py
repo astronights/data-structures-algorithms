@@ -89,3 +89,28 @@ class Solutions:
                 		else:
                     			r -= 1
         	return res
+
+	def maxArea(self, heights: List[int]) -> int:
+		'''Maximum area of water container
+
+  		Space Complexity: O(1) -> Maximum height + Pointers
+    		Time Complexity: O(n) -> Iterating over all heights
+
+  		Args:
+    			heights (list): Container boundaries
+
+       		Returns:
+	 		max_area (int): Maximum area
+    		'''
+        	max_area = 0
+        	l, r = 0, len(heights) - 1
+
+        	while l < r:
+            		area = min(heights[l], heights[r]) * (r-l)
+	 	        max_area = max(max_area, area)
+
+            		if heights[l] < heights[r]:
+                		l += 1
+            		else:
+                		r -= 1
+        	return max_area
