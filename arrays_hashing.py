@@ -1,7 +1,8 @@
+# Arrays and Hashing Solutions
 from collections import Counter, defaultdict
 
-class ArrayHashing:
-	# Arrays and Hashing Solutions
+class Solutions:
+	# Solution Functions
   
 	def hasDuplicate(self, nums: List[int]) -> bool:
 		'''Check if list has any duplicate numbers
@@ -89,6 +90,9 @@ class ArrayHashing:
 	def topKFrequent(self, nums: List[int], k: int) -> List[int]:
 		'''Get Top K Frequent Elements from list
 
+  		Space Complexity: O(n) -> Frequency Buckets
+    		Time Complexity: O(n) -> Element Iteration
+
   		Args:
     			nums (list): Iterable of numbers
        			k (int): Threshold value
@@ -109,5 +113,56 @@ class ArrayHashing:
 	        for i in range(len(freq)-1, -1, -1):
 	        	for num in freq[i]:
 	        		res.append(num)
+
 	                	if len(res) == k:
 	                    		return res
+
+class StringEncodeDecode:
+	# String Encode Decode
+	
+	def encode(self, strs: List[str]) -> str:
+		'''Encode string
+
+  		Space Complexity: O(n*m) -> Encoded string
+    		Time Complexity: O(n) -> List iteration
+
+		Values: Number of strings (n), Max Length of String (m)
+  
+  		Args:
+    			strs (list): Iterable of strings
+
+       		Returns:
+	 		s (str): Encoded string
+    		'''
+		return ''.join(f'{len(s)}#{s}' for s in strs)
+		
+	def decode(self, s: str) -> List[str]:
+		'''Decode string
+
+  		Space Complexity: O(n*m) -> Decoded list
+    		Time Complexity: O(n) -> String iteration
+
+		Values: Number of strings (n), Max Length of String (m)
+  
+  		Args:
+    			s (str): Encoded string
+
+       		Returns:
+	 		res (list): Decoded strings
+    		'''
+		res = []
+		cur = ''
+		i = 0
+		
+	        while i < len(s):
+	        	c = s[i]
+	        	if c != '#':
+	        		cur += c
+	                	i += 1
+	            	else:
+	                	nxt = i + 1 + int(cur)
+	                	res.append(s[i+1:nxt])
+	                	i = nxt
+				cur = ''
+	        return res
+	            
