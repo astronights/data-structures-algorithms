@@ -116,6 +116,30 @@ class Solutions:
 
         	return res
 
+	def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+		'''Calculate Number of Car Fleets
+
+  		Space Complexity: O(n) -> Pairs + Fleets
+    		Time Complexity: O(n log n) -> Sorting
+
+      		Args:
+			target (int): Destination
+   			position (list): Iterable of positions
+      			speed (list): Iterable of speeds
+
+  		Returns:
+    			n_fleet (int): Number of fleets
+       		'''
+        	cars = sorted(zip(position, speed), reverse=True)
+		fleets = []
+        
+        	for pos, spd in cars:
+            		reach = (target - pos) / spd
+			
+            		if not fleets or reach > fleets[-1][-1]:
+                		fleets.append([reach])
+
+        	return len(fleets)
 
 class MinStack:
 
