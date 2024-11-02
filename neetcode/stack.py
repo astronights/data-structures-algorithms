@@ -62,7 +62,7 @@ class Solutions:
 		'''Generate Parentheses
 
   		Space Complexity: O(n) -> Stack space
-  		Time Complexity: O(4^n / √n) -> Catalan number DFS
+  		Time Complexity: O(4^n / √n) -> Catalan number Permutations
 
     		Args:
       			n (int): Number of parentheses to use
@@ -92,7 +92,29 @@ class Solutions:
                 		stack.pop()
 		dfs(0, 0)
         	return res
-            
+
+	def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+		'''Calculate warmer temperatures
+
+  		Space Complexity: O(n) -> Stack + Result
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			temperatures (list): Daily temperatures
+
+   		Returns:
+     			res (list): Days before warmer temperature
+		'''
+        	stack = []
+        	res = [0] * len(temperatures)
+        
+		for i, temp in enumerate(temperatures):
+            		while stack and temp > stack[-1][1]:
+                		prev, _ = stack.pop()
+                		res[prev] = i - prev
+            		stack.append((i, temp))
+
+        	return res
 
 
 class MinStack:
