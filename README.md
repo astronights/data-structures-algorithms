@@ -4,9 +4,11 @@ My solutions to common DSA problems to keep me well-equipped with Data Structure
 
 ## Neetcode 150
 
-Completed: **14 / 150**
+Completed: **21 / 150**
 
-Solutions to Neetcode problems.
+- Arrays & Hashing
+- Two Pointers
+- Stack
 
 ## More
 
