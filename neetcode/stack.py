@@ -141,6 +141,33 @@ class Solutions:
 
         	return len(fleets)
 
+	def largestRectangleArea(self, heights: List[int]) -> int:
+		'''Area of Largest Histogram Rectangle
+
+  		Space Complexity: O(n) -> Stack
+    		Time Complexity: O(n) -> Two Pass
+
+      		Args:
+			heights (list): Heights of Histogram
+
+   		Returns:
+     			max_area (int): Maximum area of rectangle
+		'''
+	        max_area = 0
+        	stack = []
+        
+		for i, h in enumerate(heights):
+            		start = i
+            		while stack and stack[-1][1] > h:
+                		prev_i, prev_h = stack.pop()
+                		max_area = max(max_area, (i - prev_i) * prev_h)
+                		start = prev_i
+            		stack.append((start, h))
+
+        	for i, h in stack:
+            		max_area = max(max_area, h * (len(heights) - i))
+        	return max_area
+
 class MinStack:
 
 	def __init__(self):
