@@ -89,3 +89,27 @@ class Solutions:
             		else:
                 		l = mid + 1
         	return int(k)
+
+	def findMin(self, nums: List[int]) -> int:
+		'''Minimum in a sorted array
+
+  		Space Complexity: O(1) -> Pointers
+    		Time Complexity: O(log n) -> Binary Search
+
+      		Args:
+			nums (list): Iterable of numbers
+
+   		Returns:
+     			val (int): Minimum value
+		'''
+	        l, r = 0, len(nums) - 1
+
+        	while l < r:
+            		# Mid Calculation different
+			mid = l + (r - l) // 2
+
+            		if nums[mid] < nums[r]:
+				r = mid
+			else:
+				l = mid + 1
+	        return nums[l]
