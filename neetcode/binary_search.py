@@ -1,4 +1,5 @@
 # Binary Search Solutions
+from math import ceil
 
 class Solutions:
 	# Solution Functions
@@ -58,3 +59,33 @@ class Solutions:
             		else:
                 		r = mid - 1
         	return False
+
+	def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        	'''Minimum eating speed to eat bananas
+
+  		Space Complexity: O(1) -> Pointers
+    		Time Complexity: O(log n) -> Binary Search
+
+      		Values: Size of highest pile (n)
+
+      		Args:
+			piles (list): Piles of bananas
+   			h (int): Maximum permissible time
+
+		Returns:
+  			k (int): Minimum eating speed
+     		'''
+		l, r = 1, max(piles)
+        	k = float('inf')
+        	
+		while l <= r:
+            		mid = (l + r) // 2
+
+            		t_time = sum(ceil(float(p) / mid) for p in piles)
+
+	    		if t_time <= h:
+                		k = mid
+                		r = mid - 1
+            		else:
+                		l = mid + 1
+        	return int(k)
