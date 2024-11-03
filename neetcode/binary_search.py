@@ -28,3 +28,33 @@ class Solutions:
                         else:
                                 r = mid - 1
                 return -1
+
+	def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+		'''Search element in matrix
+
+  		Space Complexity: O(n) -> Pointers
+    		Time Complexity: O(log (m*n)) -> Binary Search
+
+      		Values: Dimensions of matrix (m*n)
+
+ 		Args:
+   			matrix (list): 2 Dimensional list of values
+      			target (int): Target to find
+
+  		Returns:
+    			is_exist (bool): If value in matrix
+       		'''
+		M, N = len(matrix), len(matrix[0])
+        	l, r = 0, M * N - 1
+
+        	while l <= r:
+            		mid = (l + r) // 2
+            		mid_R, mid_C = mid // N, mid % N
+			
+            		if matrix[mid_R][mid_C] == target:
+                		return True
+            		elif matrix[mid_R][mid_C] < target:
+                		l = mid + 1
+            		else:
+                		r = mid - 1
+        	return False
