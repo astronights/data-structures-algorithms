@@ -91,7 +91,7 @@ class Solutions:
         	return int(k)
 
 	def findMin(self, nums: List[int]) -> int:
-		'''Minimum in a sorted array
+		'''Minimum in a rotated array
 
   		Space Complexity: O(1) -> Pointers
     		Time Complexity: O(log n) -> Binary Search
