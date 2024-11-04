@@ -147,6 +147,49 @@ class Solutions:
                     			r = mid - 1
         	return -1
 
+	def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+		'''Median of two sorted arrays
+
+    		Space Complexity: O(1) -> Pointers
+      		Time Complexity: O(log min(m, n)) -> Binary Search on shorter list
+
+ 		Values: Length of lists (m, n)
+
+   		Args:
+     			nums1 (list): Iterable 1 of numbers
+			nums2 (list): Iterable 2 of numbers
+
+   		Returns:
+     			mid (float): Median value
+		'''
+        	if len(nums1) > len(nums2):
+			nums1, nums2 = nums2, nums1
+
+        	half = (len(nums1) + len(nums2)) // 2
+
+        	l_a, r_a = 0, len(nums1) - 1
+
+        	while True:
+            		mid_A = (l_a + r_a) // 2
+            		mid_B = half - 1 - mid_A - 1
+
+            		left_A = nums1[mid_A] if mid_A >= 0 else float('-inf')
+			right_A = nums1[mid_A + 1] if mid_A + 1 < len(nums1) else float('inf')
+
+            		left_B = nums2[mid_B] if mid_B >= 0 else float('-inf')
+            		right_B = nums2[mid_B + 1] if mid_B + 1 < len(nums2) else float('inf')
+
+            		if left_A <= right_B and right_A >= left_B:
+                		if all_len % 2 == 0:
+                    			return (max(left_A, left_B) + min(right_A, right_B)) / 2
+                		else:
+                    			return min(right_A, right_B)
+            		elif left_A > right_B:
+                		r_a = mid_A - 1
+            		else:
+                		l_a = mid_A + 1
+
+
 
 class TimeMap:
 
