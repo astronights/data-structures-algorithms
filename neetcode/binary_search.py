@@ -1,5 +1,6 @@
 # Binary Search Solutions
 from math import ceil
+from collections import defaultdict
 
 class Solutions:
 	# Solution Functions
@@ -145,3 +146,59 @@ class Solutions:
                 		else:
                     			r = mid - 1
         	return -1
+
+
+class TimeMap:
+
+	def __init__(self):
+		'''Time Based Key Value Store
+
+		Space Complexity: O(m*n) -> Timestamps for keys
+
+    		Values: Maximum number of timestamps (m), Unique keys (n)
+      		'''
+        	self.log = defaultdict(list)
+
+    	def set(self, key: str, value: str, timestamp: int) -> None:
+		'''Add value to store
+
+    		Time Complexity: O(1) -> List Append
+
+      		Args:
+			key (str): String Key
+   			value (str): String Value
+      			timestamp (int): Time of insertion
+	 	'''
+	        self.log[key].append((timestamp, value))
+
+	def get(self, key: str, timestamp: int) -> str:
+		'''Get latest value by timestamp
+
+  		Time Complexity: O(log m) -> Binary Search
+
+      		Args:
+			key (str): String key
+   			timestamp (int): Timestamp
+
+      		Returns:
+			val (str): Latest value
+   		'''
+        	val = ''
+		
+	        if key in self.log:
+	        	logs = self.log[key]
+	        	l, r = 0, len(logs) - 1
+			
+	        	while l <= r:
+	                	mid = (l + r) // 2
+	                	cur_log = logs[mid]
+				
+	                	if cur_log[0] == timestamp:
+	                    		val = cur_log[1]
+	                    		break
+	                	elif cur_log[0] < timestamp:
+	                    		val = cur_log[1]
+	                    		l = mid + 1
+	                	else:
+	                    		r = mid - 1
+	        return val
