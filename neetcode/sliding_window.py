@@ -1,5 +1,4 @@
 # Sliding Window Solutions
-from collections import defaultdict
 
 class Solutions:
 	# Solution Functions
@@ -36,17 +35,48 @@ class Solutions:
    		Returns:
      			longest (int): Length of longest string
 		'''
-        	start = 0
+        	ix = 0
         	longest = 0
-		seen = defaultdict(int)
+		seen = {}
 		
         	for i, c in enumerate(s):
             		if seen.get(c, 0) == 0:
-                		seen[c] += 1
+                		seen[c] = 1
                 		longest = max(longest, i - ix + 1)
             		else:
-                		while seen.get(c) != 0:
+                		while seen[c] != 0:
                     			seen[s[ix]] -= 1
                     			ix += 1
                 		seen[c] = 1
         	return longest
+
+	def characterReplacement(self, s: str, k: int) -> int:
+		'''Longest repeating substring with character replacement
+
+  		Space Complexity: O(1) -> Frequency counter [Size 26]
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			s (str): Iterable of characters
+   			k (int): Maximum replacements
+
+      		Returns:
+			res (int): Longest substring
+   		'''
+    		
+        	seen = {}
+        	res = 0
+        
+		ix = 0
+        	max_freq = 0
+
+        	for i, c in enumerate(s):
+            		seen[c] = seen.get(c, 0) + 1
+            		max_freq = max(max_freq, seen[c])
+
+            		while (i - ix + 1) - max_freq > k:
+                		seen[s[ix]] -= 1
+                		ix += 1
+            		res = max(res, i - ix + 1)
+			
+        	return res
