@@ -91,7 +91,7 @@ class Solutions:
         	return int(k)
 
 	def findMin(self, nums: List[int]) -> int:
-		'''Minimum in a rotated array
+		'''Minimum in a rotated sorted array
 
   		Space Complexity: O(1) -> Pointers
     		Time Complexity: O(log n) -> Binary Search
@@ -113,3 +113,35 @@ class Solutions:
 			else:
 				l = mid + 1
 	        return nums[l]
+
+	def search(self, nums: List[int], target: int) -> int:
+		'''Search in a rotated sorted array
+
+  		Space Complexity: O(1) -> Pointers
+    		Time Complexity: O(log n) -> Binary Search
+
+      		Args:
+			nums (list): Iterable of numbers
+   			target (int): Number to find
+
+      		Returns:
+			index (int): Index of target
+   		'''
+	        l, r = 0, len(nums) - 1
+
+        	while l <= r:
+            		mid = (l + r) // 2
+            
+			if nums[mid] == target:
+                		return mid
+            		elif nums[l] <= nums[mid]:
+                		if target >= nums[l] and target < nums[mid]:
+                    			r = mid - 1
+                		else:
+                    			l = mid + 1
+            		else:
+                		if target <= nums[r] and target > nums[mid]:
+                    			l = mid + 1
+                		else:
+                    			r = mid - 1
+        	return -1
