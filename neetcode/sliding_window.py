@@ -80,3 +80,45 @@ class Solutions:
             		res = max(res, i - ix + 1)
 			
         	return res
+
+	def checkInclusion(self, s1: str, s2: str) -> bool:
+		'''Check permutation of one string in another
+
+  		Space Complexity: O(1) -> Counters of size 26
+    		Time Complexity: O(n) -> Two Pass over string
+
+      		Args:
+			s1 (str): String to check against
+   			s2 (str): String to check within
+
+      		Returns:
+			is_perm (bool): If permutation exists
+   		'''
+        	need = Counter(s1)
+        	rem = Counter(s1)
+
+        	ix = 0
+
+        	for i, c in enumerate(s2):
+			# Char is needed and not yet seen
+            		if c in rem:
+                		rem[c] -= 1
+                		if rem[c] == 0:
+                    			del rem[c]
+           		else:
+				# Char is needed but already seen
+                		if c in need:
+                    			while c not in rem:
+                        			pc = s2[ix]
+                        			if pc in need:
+                            				rem[pc] = rem.get(pc, 0) + 1
+                        			ix += 1
+                    			del rem[c]
+                		# Character not needed
+				else:
+                    			ix += 1
+                    			rem = need.copy()
+            		if not rem:
+                		return True
+		return False
+            
