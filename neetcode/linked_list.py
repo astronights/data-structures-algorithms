@@ -238,3 +238,34 @@ class Solutions:
             		if slow == fast:
                 		return True
         	return False
+
+	def findDuplicate(self, nums: List[int]) -> int:
+		'''Find duplicate in list
+
+    		Space Complexity: O(1) -> Pointers
+      		Time Complexity: O(n) -> Two passes over list
+
+ 		Args:
+   			nums (list): Iterable of numbers
+
+      		Returns:
+			ix (int): Index of duplicate
+   		'''
+		slow, fast = 0, 0
+
+		# Find cycle
+        	while True:
+            		slow = nums[slow]
+            		fast = nums[nums[fast]]
+
+            		if slow == fast:
+                		break
+
+        	slow_start = 0
+
+		# Begin again to find cyclic node
+        	while slow_start != slow:
+            		slow = nums[slow]
+            		slow_start = nums[slow_start]
+
+        	return slow
