@@ -1,4 +1,5 @@
 # Sliding Window Solutions
+from collections import Counter
 
 class Solutions:
 	# Solution Functions
@@ -162,3 +163,20 @@ class Solutions:
                     			shortest = s[ix:i+1]
 					
         	return shortest if len(shortest) <= len(s) else ''
+
+	def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+		'''Maximum over sliding windows
+
+  		Space Complexity: O(1) -> Pointers
+    		Time Complexity: O(nk) -> Sliding Windows
+
+      		Values: Numbers (n), Window size (k)
+
+ 		Args:
+   			nums (list): Iterable of numbers
+      			k (int): Window size
+
+  		Returns:
+    			max_windows (list): Iterable of numbers
+       		'''
+        	return [max(nums[i:i+k]) for i in range(len(nums)-k+1)]
