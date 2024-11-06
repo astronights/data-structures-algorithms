@@ -11,6 +11,19 @@ class ListNode:
 		self.val = val
         	self.next = next
 
+class Node:
+	def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+		'''Node of Linked List with Random Pointer
+
+  		Args:
+    			x (int): value
+       			next (Node): Next Node
+	  		random (Node): Random Node
+     		'''
+        	self.val = int(x)
+        	self.next = next
+        	self.random = random
+
 class Solutions:
 	# Solution Functions
 
@@ -133,3 +146,34 @@ class Solutions:
 
         	dummy.next = dummy.next.next
         	return cur.next
+
+
+	def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+		'''Deep Copy Linked List with random pointers
+
+  		Space Complexity: O(n) -> Copy Dictionary
+    		Time Complexity: O(n) -> Two Pass over all nodes
+
+      		Args:
+			head (Node): Linked List
+
+   		Returns:
+     			copy_head (Node): Deep copied Linked List
+		'''
+        	if not head:
+            		return None
+        
+		copies = {}
+        	cur = head
+        	
+		while cur:
+            		copies[cur] = Node(cur.val)
+            		cur = cur.next
+
+        	for node in copies.keys():
+            		if node.next:
+                		copies[node].next = copies[node.next]
+            		if node.random:
+                		copies[node].random = copies[node.random]
+
+        	return copies[head]
