@@ -69,4 +69,38 @@ class Solutions:
         	
 		return res.next
 
-        
+	def reorderList(self, head: Optional[ListNode]) -> None:
+		'''Reorder Linked List
+
+  		Space Complexity: O(1) -> Linked List Pointers
+    		Time Complexity: O(n) -> Three Passes over Linked List
+
+      		Args:
+			head (ListNode): Linked List
+   		'''
+
+		# Identify mid point
+		slow, fast = head, head.next
+        	while fast and fast.next:
+            		slow = slow.next
+            		fast = fast.next.next
+
+        	cur, prev = slow.next, None
+        	slow.next = None
+
+		# Reverse second half of linked list
+        	while cur:
+            		temp = cur.next
+            		cur.next = prev
+            		prev = cur
+            		cur = temp
+
+        	cur = head
+
+		# Insert reversed half in between nodes
+        	while prev:
+            		temp = cur.next
+            		cur.next = prev
+            		prev = prev.next
+            		cur.next.next = temp
+            		cur = cur.next.next
