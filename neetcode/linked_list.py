@@ -215,3 +215,26 @@ class Solutions:
             		cur.next = ListNode(carry)
 
         	return res.next
+
+
+	def hasCycle(self, head: Optional[ListNode]) -> bool:
+		'''Linked List Cycle Detection
+
+  		Space Complexity: O(1) -> Two Pointers
+    		Time Complexity: O(n) -> Pass over Linked List nodes
+
+      		Args:
+			head (ListNode): Linked List
+
+   		Returns:
+     			has_cycle (bool): If Linked List contains cycle
+   		'''
+        	slow, fast = head, head.next
+        
+		while fast and fast.next:
+            		slow = slow.next
+            		fast = fast.next.next
+
+            		if slow == fast:
+                		return True
+        	return False
