@@ -122,3 +122,43 @@ class Solutions:
                 		return True
 		return False
             
+	def minWindow(self, s: str, t: str) -> str:
+		'''Minimum window with characters
+
+  		Space Complexity: O(n) -> Frequency Counters
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			s (str): String	
+   			t (str): Substring
+
+      		Returns:
+			shortest (str): Minimum window
+   		'''
+        	need = Counter(t)
+        	rem = Counter(t)
+
+		ix = 0
+        	seen = {}
+        	shortest = s + s
+
+        	for i, c in enumerate(s):
+			# Mark latest seen instance
+            		if c in need:
+                		seen[c] = i
+            		if c in rem:
+                		rem[c] -= 1
+            		else:
+				# Slide window
+                		if c in need and s[ix] == c:
+                    			ix = min(seen.values())
+            		if rem[c] == 0:
+                		del rem[c]
+            
+            		if len(rem) == 0:
+                		while s[ix] not in need:
+                    			ix += 1
+                		if (i - ix + 1) < len(shortest):
+                    			shortest = s[ix:i+1]
+					
+        	return shortest if len(shortest) <= len(s) else ''
