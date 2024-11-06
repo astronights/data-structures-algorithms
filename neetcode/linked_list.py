@@ -177,3 +177,41 @@ class Solutions:
                 		copies[node].random = copies[node.random]
 
         	return copies[head]
+
+	def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+		'''Add two numbers
+
+  		Space Complexity: O(1) -> Linked List Pointers
+    		Time Complexity: O(n) -> Pass over all digits
+
+      		Values: Number of digits in sum (n) i.e. length of longer number + 1
+
+		Args:
+  			l1 (ListNode): Number 1 Linked List
+     			l2 (ListNode): Number 2 Linked List
+
+ 		Returns:
+   			res (ListNode): Sum Linked List
+      		'''
+        	res = ListNode()
+        	cur = res
+        	carry = 0
+
+        	while l1 or l2:
+            		val1 = l1.val if l1 else 0
+            		val2 = l2.val if l2 else 0
+
+            		total = (val1 + val2 + carry)
+            		add = total % 10
+            		carry = total // 10
+
+            		cur.next = ListNode(add)
+            		cur = cur.next
+
+            		l1 = l1.next if l1 else None
+            		l2 = l2.next if l2 else None
+
+        	if carry > 0:
+            		cur.next = ListNode(carry)
+
+        	return res.next
