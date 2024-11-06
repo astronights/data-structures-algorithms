@@ -104,3 +104,32 @@ class Solutions:
             		prev = prev.next
             		cur.next.next = temp
             		cur = cur.next.next
+
+	def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+		'''Remove n-th node from end
+
+  		Space Complexity: O(1) -> Linked List Pointers
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			head (ListNode): Linked List
+   			n (int): Node index from end
+
+      		Returns:
+			cur (ListNode): Linked List without nth node
+   		'''
+        	# Traverse to n-th node from start
+        	counter = head
+        	for i in range(n-1):
+            		counter = counter.next
+
+        	cur = ListNode(next=head)
+        	dummy = cur
+
+		# Traverse another pointer till first pointer reaches end
+        	while counter.next:
+            		dummy = dummy.next
+            		counter = counter.next
+
+        	dummy.next = dummy.next.next
+        	return cur.next
