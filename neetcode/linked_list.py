@@ -275,7 +275,7 @@ class Solutions:
 		'''Merge K Linked Lists
 
   		Space Complexity: O(k) -> Min Heap 
-    		Time Complexity: O(n*k) -> Pass over all elements
+    		Time Complexity: O(n* log k) -> Single Pass + Heap IO
 
 		Values: Linked Lists (k), Maximum elements (n)
 
