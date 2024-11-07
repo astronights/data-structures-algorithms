@@ -269,3 +269,101 @@ class Solutions:
             		slow_start = nums[slow_start]
 
         	return slow
+
+
+class LRUNode:
+	def __init__(self, key = 0, val = 0, prev = None, nxt = None):
+		'''Linked List Node for LRU Cache
+
+  		Args:
+    			key (int): Key
+       			value (int): Value
+	  		prev (LRUNode): Pointer to previous node
+     			nxt (LRUNode): Pointer to next node
+		'''
+		self.key = key
+		self.val = val
+		self.prev = prev
+		self.nxt = nxt
+
+class LRUCache
+	def __init__(self, capacity: int):
+		'''LRU Cache implementation with Doubly Linked List
+
+  		Space Complexity: O(n) -> Dictionary for keys
+
+      		Args:
+			capacity (int): Maximum capacity
+		'''
+		self.capacity = capacity
+		self.cache = {}
+
+		self.left = LRUNode()
+		self.right = LRUNode()
+
+		self.left.nxt = self.right
+		self.right.prev = self.left
+
+	def remove(self, node: LRUNode):
+		'''Helper function to remove node from Linked List
+
+  		Time Complexity: O(1) -> Repoint pointers
+
+    		Args:
+      			node (LRUNode): Node to remove
+	 	'''
+		node.prev.nxt = node.nxt
+		node.nxt.prev = node.prev
+
+	def insert(self, node: LRUNode):
+		'''Helper function to insert node to Linked List
+
+  		Time Complexity: O(1) -> Repoint pointers
+
+    		Args:
+      			node (LRUNode): Node to add
+	 	'''
+		prev, bound = self.right.prev, self.right
+
+		prev.nxt = node
+		node.prev = prev
+
+		node.nxt = bound
+		bound.prev = node
+		
+	def get(self, key: int) -> int:
+		'''Access value of key
+
+  		Time Complexity: O(1) -> Dict IO and node move
+
+    		Args:
+      			key (int): Key
+
+  		Returns:
+    			val (int): Value
+	 	'''
+		if key in self.cache:
+			cur = self.cache[key]
+			self.remove(cur)
+			self.insert(cur)
+			return cur.val
+		return -1
+
+	def put(self, key: int, value: int) -> None:
+		'''Add key to cache
+
+  		Time Complexity: O(1) -> Dict IO and pointer move
+
+    		Args:
+      			key (int): Key
+	 		value (int): Value
+		'''
+		if key in self.cache:
+			self.remove(self.cache[key])
+		self.cache[key] = LRUNode(key, value)
+		self.insert(self.cache[key])
+
+		if len(self.cache) > self.capacity:
+			del self.cache[self.left.nxt.key]
+			self.remove(self.left.nxt)
+			
