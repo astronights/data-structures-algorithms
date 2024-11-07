@@ -1,4 +1,5 @@
 # Linked List
+import heapq
 
 class ListNode:
 	def __init__(self, val = 0, next = None):
@@ -269,6 +270,42 @@ class Solutions:
             		slow_start = nums[slow_start]
 
         	return slow
+
+	def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+		'''Merge K Linked Lists
+
+  		Space Complexity: O(k) -> Min Heap 
+    		Time Complexity: O(n*k) -> Pass over all elements
+
+		Values: Linked Lists (k), Maximum elements (n)
+
+  		Args:
+    			lists (list): List of Linked Lists
+
+       		Returns:
+	 		out (ListNode): Linked List
+    		'''
+		c = 0
+        	min_heap = []
+        
+		for cur_list in lists:
+            		heapq.heappush(min_heap, (cur_list.val, c, cur_list.next))
+            		c += 1
+        
+        	out = ListNode()
+        	res = out
+        
+		while min_heap:
+            		cur = heapq.heappop(min_heap)
+            		res.next = ListNode(cur[0])
+            		res = res.next
+
+            		cur = cur[2]
+            		if cur:
+                		heapq.heappush(mh, (cur.val, c, cur.next))
+                		c += 1
+            
+        	return out.next
 
 
 class LRUNode:
