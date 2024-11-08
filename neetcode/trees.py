@@ -123,3 +123,25 @@ class Solutions:
 
         	dfs(root)
         	return is_balance
+
+	def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+		'''Check if two trees are the same
+
+  		Space Complexity: O(n) -> Tree Structure
+    		Time Complexity: O(n) -> Node Iteration
+
+      		Args:
+			p (TreeNode): Binary Tree 1
+   			q (TreeNode): Binary Tree 2
+
+      		Returns:
+			is_same (bool): If two trees are the same
+   		'''
+        	if not p and not q:
+            		return True
+        	elif not p or not q:
+            		return False
+        	else:
+            		return (p.val == q.val 
+				and self.isSameTree(p.left, q.left) 
+				and self.isSameTree(p.right, q.right))
