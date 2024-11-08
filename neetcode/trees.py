@@ -246,3 +246,31 @@ class Solutions:
                 		nodes.extend([n.left, n.right])
             		queue = [n for n in nodes if n]
         	return view
+
+	def goodNodes(self, root: TreeNode) -> int:
+		'''Count good nodes in binary tree
+
+  		Space Complexity: O(n) -> Tree Structure
+    		Time Complexity: O(n) -> Node Iteration
+
+      		Args:
+			root (TreeNode): Binary Tree
+
+   		Returns:
+     			c (int): Number of good nodes
+		'''
+        	c = 0
+        	
+		def dfs(tree, val):
+            		nonlocal c
+            		if not tree:
+                		return
+            		if tree.val >= val:
+                		c += 1
+            
+			max_val = max(tree.val, val)
+            		dfs(tree.left, max_val)
+            		dfs(tree.right, max_val)
+
+        	dfs(root, -101) # Minimum value as per problem
+        	return c
