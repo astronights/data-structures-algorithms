@@ -193,3 +193,30 @@ class Solutions:
             		else:
                 		root = root.right
         	return root
+
+
+	def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+		'''Level Order Traversal of Binary Tree
+
+  		Space Complexity: O(n) -> Leaf Nodes of Tree
+    		Time Complexity: O(n) -> Node Iteration
+
+      		Args:
+			root (TreeNode): Binary Tree
+
+     		Returns:
+       			out (list): Node Values
+	  	'''
+        	if not root:
+            		return []
+			
+        	queue = [root]
+        	out = []
+        
+		while queue:
+            		nodes = []
+            		out.append([n.val for n in queue])
+            		for n in queue:
+                		nodes.extend([n.left, n.right])
+            		queue = [n for n in nodes if n]
+        	return out
