@@ -313,3 +313,32 @@ class Solutions:
                 		return False
 
         	return dfs(root, -1001, 1001)
+
+	def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+		'''K-th smallest element in Binary Search Tree
+
+  		Space Complexity: O(n) -> Tree Structure
+    		Time Complexity: O(n) -> Node Iteration
+
+  		Args:
+    			root (TreeNode): Binary Search Tree
+       			k (int): Index of sorted element
+
+   		Returns:
+     			node (int): K-th smallest value
+		'''
+        	stack = []
+        	cur = root
+        
+		while cur or stack:
+            		while cur:
+                		stack.append(cur)
+                		cur = cur.left
+            
+            		node = stack.pop()
+            		k -= 1
+
+            		if k == 0:
+                		return node.val
+            
+            		cur = node.right
