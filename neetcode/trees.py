@@ -261,7 +261,13 @@ class Solutions:
 		'''
         	c = 0
         	
-		def dfs(tree, val):
+		def dfs(tree: Optional[TreeNode], val: int):
+			'''DFS Through Tree
+
+      			Args:
+	 			tree (TreeNode): Tree Node
+     				val (int): Maximum value so far
+    			'''
             		nonlocal c
             		if not tree:
                 		return
@@ -274,3 +280,36 @@ class Solutions:
 
         	dfs(root, -101) # Minimum value as per problem
         	return c
+
+	def isValidBST(self, root: Optional[TreeNode]) -> bool:
+		'''Check if valid Binary Search Tree
+
+  		Space Complexity: O(n) -> Tree Structure
+    		Time Complexity: O(n) -> Node Iteration
+
+      		Args:
+			root (TreeNode): Binary Tree
+
+   		Returns:
+     			is_valid (bool): If Valid Binary Search Tree
+		'''
+        	def dfs(tree: Optional[TreeNode], min_val: int, max_val: int):
+			'''DFS Through Tree
+
+      			Args:
+	 			tree (TreeNode): Tree Node
+     				min_val (int): Minimum permissable value
+	 			max_val (int): Maximum permissable value
+
+     			Returns:
+				is_valid (bool): If subtree is valid
+    			'''
+            		if not tree:
+                		return True
+            		if tree.val < max_val and tree.val > min_val:
+                		return (dfs(tree.left, min_val, tree.val) 
+					and dfs(tree.right, tree.val, max_val))
+            		else:
+                		return False
+
+        	return dfs(root, -1001, 1001)
