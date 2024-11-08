@@ -307,6 +307,56 @@ class Solutions:
             
         	return out.next
 
+	def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+		'''Reverse node in K groups
+
+  		Space Complexity: O(1) -> Linked List Pointers
+    		Time Complexity: O(n) -> Pass over all elements
+
+      		Args:
+			head (ListNode): Linked List
+   			k (int): Group size
+
+		Returns:
+  			out (ListNode): K Group reversed Linked List
+     		'''
+        	c = 0
+
+		# Current Linked List Pointers
+		cur = head
+        	bound = cur
+
+		# Output Linked List Pointers
+		out = ListNode()
+        	res = out
+        
+		while bound:
+            		bound = bound.next
+            		c = (c + 1) % k
+
+			# Reach K-th Node
+            		if c == 0:
+                		start = cur
+		                prev = None
+
+				# Reverse Part of Linked List
+				while start and start != bound:
+                    			temp = start.next
+                    			start.next = prev
+                    			prev = start
+                    			start = temp
+
+				# Append reversed Linked List to output
+                		res.next = prev
+                		while res.next:
+                    			res = res.next
+			# Shift Group Start
+                	cur = bound
+		# Add Remaining Nodes
+		res.next = cur
+		
+		return out.next
+
 
 class LRUNode:
 	def __init__(self, key = 0, val = 0, prev = None, nxt = None):
