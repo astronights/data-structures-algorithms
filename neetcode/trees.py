@@ -33,3 +33,19 @@ class Solutions:
         	
 		root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
         	return root
+
+	def maxDepth(self, root: Optional[TreeNode]) -> int:
+		'''Maximum depth of Binary Tree
+
+  		Space Complexity: O(n) -> Tree structure
+    		Time Complexity: O(n) -> Node iteration
+
+      		Args:
+			root (TreeNode): Binary Tree
+
+   		Returns:
+     			max_depth (int): Maximum depth
+		'''
+        	if not root:
+            		return 0
+        	return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
