@@ -1,4 +1,4 @@
-# Linked List
+# Linked List Solutions
 import heapq
 
 class ListNode:
