@@ -220,3 +220,29 @@ class Solutions:
                 		nodes.extend([n.left, n.right])
             		queue = [n for n in nodes if n]
         	return out
+
+	def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+		'''Right Side View of Binary Tree
+
+    		Space Complexity: O(n) -> Tree Structure
+      		Time Complexity: O(n) -> Node Iteration
+
+  		Args:
+    			root (TreeNode): Binary Tree
+
+       		Returns:
+	 		view (list): Right Side View
+    		'''
+        	if not root:
+            		return []
+        	
+		queue = [root]
+        	view = []
+        	
+		while queue:
+            		nodes = []
+            		view.append(queue[-1].val)
+            		for n in queue:
+                		nodes.extend([n.left, n.right])
+            		queue = [n for n in nodes if n]
+        	return view
