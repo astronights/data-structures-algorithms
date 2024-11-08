@@ -1,5 +1,16 @@
 # More interesting puzzles
 
+class TreeNode:
+	def __init__(self, x):
+		'''Binary Tree Node
+
+  		Args:
+    			x (int): Value
+       		'''
+        	self.val = x
+        	self.left = None
+        	self.right = None
+
 class Solution:
 	'''Solution Functions'''
 	
@@ -53,3 +64,28 @@ class Solution:
                 		profits[i] = max(profits[i], p - buys[i])
 
         	return profits[k]
+
+
+	def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+		'''Lowest Common Ancestor of Binary Tree
+
+  		Space Complexity: O(n) -> Tree Structure
+    		Time Complexity: O(n) -> Node Iteration
+
+      		Args:
+			root (TreeNode): Binary Tree
+   			p (TreeNode): Node 1
+      			q  (TreeNode): Node 2
+
+  		Returns:
+    			node (TreeNode): Lowest Common Ancestor
+       		'''
+    		if not root or root == p or root == q:
+      			return root
+
+    		l = self.lowestCommonAncestor(root.left, p, q)
+    		r = self.lowestCommonAncestor(root.right, p, q)
+
+    		if l and r:
+      			return root
+    		return l or r
