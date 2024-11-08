@@ -84,3 +84,42 @@ class Solutions:
 
         	_ = dfs(root)
         	return max_D
+
+	def isBalanced(self, root: Optional[TreeNode]) -> bool:
+		'''Is Binary Tree balanced
+
+   		Space Complexity: O(n) -> Tree Structure
+     		Time Complexity: O(n) -> Node Iteration
+
+       		Args:
+	 		root (TreeNode): Binary Tree
+
+    		Returns:
+      			is_balance (bool): Is tree balanced
+	 	'''
+        	is_balance = True
+        
+		def dfs(tree: Optional[TreeNode]):
+			'''DFS Through Tree
+
+      			Args:
+	 			tree (TreeNode): Tree Node
+     			Returns:
+				height (int): Height so far
+    			'''
+            		nonlocal is_balance
+            		
+			if not tree:
+                		return 0
+
+		        left_H = dfs(tree.left)
+            		right_H = dfs(tree.right)
+
+            		if abs(left_H - right_H) > 1:
+                		is_balance = False
+                		return 0
+
+            		return 1 + max(left_H, right_H)
+
+        	dfs(root)
+        	return is_balance
