@@ -145,3 +145,27 @@ class Solutions:
             		return (p.val == q.val 
 				and self.isSameTree(p.left, q.left) 
 				and self.isSameTree(p.right, q.right))
+
+	def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+		'''Check if tree is a subtree of another
+
+  		Space Complexity: O(m + n) -> Two Trees
+    		Time Complexity: O(m * n) -> Node Iteration
+
+      		Values: Nodes in Tree (m), Nodes in Sub Tree (n)
+
+ 		Args:
+   			root (TreeNode): Binary Tree
+      			subRoot (TreeNode): Binary SubTree
+
+  		Returns:
+    			is_sub (bool): If Sub Tree
+       		'''
+        	if not subRoot:
+            		return True
+        	elif not root:
+            		return False
+        	else:
+            		return (self.isSameTree(root, subRoot) 
+				or self.isSubtree(root.left, subRoot) 
+				or self.isSubtree(root.right, subRoot))
