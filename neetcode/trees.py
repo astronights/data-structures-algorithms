@@ -169,3 +169,27 @@ class Solutions:
             		return (self.isSameTree(root, subRoot) 
 				or self.isSubtree(root.left, subRoot) 
 				or self.isSubtree(root.right, subRoot))
+
+	def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+		'''Lowest Common Ancestor in a Binary Search Tree
+
+    		Space Complexity: O(n) -> Tree Structure
+      		Time Complexity: O(n) -> Node Iteration
+
+ 		Args:
+   			root (TreeNode): Binary Search Tree
+      			p (TreeNode): Node 1
+	 		q (TreeNode): Node 2
+
+    		Returns:
+      			root (TreeNode): Lowest Common Ancestor
+	 	'''
+        	if p.val >= q.val:
+            		p, q = q, p
+        
+		while not (p.val <= root.val and q.val >= root.val):
+            		if p.val <= root.val:
+                		root = root.left
+            		else:
+                		root = root.right
+        	return root
