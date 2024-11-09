@@ -419,3 +419,71 @@ class Solutions:
 
         	dfs(root)
         	return path_sum
+
+
+class Codec:
+	'''Serialize / Deserialize Binary Tree'''
+
+	def serialize(self, root: Optional[TreeNode]) -> str:
+		'''Serialize Binary Tree
+
+  		Space Complexity: O(n) -> Tree Structure
+    		Time Complexity: O(n) -> Node Iteration
+
+      		Args:
+			root (TreeNode): Binary Tree
+
+   		Returns:
+     			out (str): Encoded Tree
+		'''
+        	out = []
+        
+		def dfs(tree: Optional[TreeNode]):
+			'''DFS over Binary Tree
+
+      			Args:
+	 			tree (TreeNode): Binary Tree
+     			'''
+            		nonlocal out
+            		
+			if not tree:
+                		out.append('N')
+                		return
+            		
+			out.append(str(tree.val))
+            		dfs(tree.left)
+            		dfs(tree.right)
+        	
+		dfs(root)
+        	return '#'.join(out)
+
+	def deserialize(self, data: str) -> Optional[TreeNode]:
+		'''Deserialize Binary Tree
+
+    		Space Complexity: O(n) -> Tree Nodes
+      		Time Complexity: O(n) -> Node Iteration
+
+ 		Args:
+   			data (str): Encoded string
+
+      		Returns:
+			root (TreeNode): Binary Tree
+   		'''
+        	i = 0
+	        nodes = data.split('#')
+        
+		def dfs():
+			'''DFS over Binary Tree'''
+            		nonlocal i
+            		if nodes[i] == 'N':
+                		i += 1
+                		return None
+
+            		root = TreeNode(nodes[i])
+            		i += 1
+            
+			root.left = dfs()
+            		root.right = dfs()
+            		return root
+
+        	return dfs()
