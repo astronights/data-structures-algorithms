@@ -70,3 +70,68 @@ class PrefixTree:
                         path = path.nodes[c]
                 return True
         
+
+class WordDictionary:
+
+        def __init__(self):
+                '''Word Search Dictionary with wildcard
+
+                Space Complexity: O(t) -> Number of nodes
+                '''
+                self.trie = TrieNode()
+
+        def addWord(self, word: str) -> None:
+                '''Add Word in Trie
+
+                Time Complexity: O(n) -> Length of word
+
+                Args:
+                        word (str): Iterable to insert
+                '''
+                path = self.trie
+                
+                for c in word:
+                        if c not in path.nodes:
+                                path.nodes[c] = TrieNode()
+                        path = path.nodes[c]
+                path.isWord = True
+
+        def search(self, word: str) -> bool:
+                '''Search for word with wildcard
+
+                Time Complexity: O(26^n) -> DFS
+
+                Args:
+                        word (str): Iterable to search
+
+                Returns:
+                        is_word (bool): If word exists
+                '''
+
+                def dfs(i: int, path: TrieNode) -> bool:
+                        '''DFS through Trie
+
+                        Args:
+                                i (int): Index
+                                path (TrieNode): Current path
+
+                        Returns:
+                                is_word (bool): If word exists
+                        '''
+                        nodes = path.nodes
+                        if i == len(word):
+                                # Final character
+                                return path.isWord
+                        if word[i] != '.':
+                                # Check for a-z characters
+                                if word[i] in nodes:
+                                    return dfs(i + 1, nodes[word[i]])
+                                else:
+                                    return False
+                        else:
+                                # Check for wildcard . characters
+                                if len(path.nodes) > 0:
+                                    return any((dfs(i + 1, nxt) for nxt in nodes.values()))
+                                else:
+                                    return False
+                return dfs(0, self.trie)
