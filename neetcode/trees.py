@@ -384,3 +384,38 @@ class Solutions:
 
 		return dfs(0, len(preorder) - 1)
 			
+	def maxPathSum(self, root: Optional[TreeNode]) -> int:
+		'''Maximum path sum
+
+    		Space Complexity: O(n) -> Tree Structure
+      		Time Complexity: O(n) -> Node Iteration
+
+ 		Args:
+   			root (TreeNode): Binary Tree
+
+      		Returns:
+			path_sum (int): Maximum path sum
+   		'''
+		path_sum = -1001
+        
+		def dfs(tree: Optional[TreeNode]) -> int:
+			'''DFS Through Tree
+
+      			Args:
+	 			tree (TreeNode): Tree Node
+
+			Returns:
+   				tree_sum (int): Current tree sum
+    			'''
+            		nonlocal max_sum
+            		if not tree:
+                		return 0
+            
+            		left_sum = max(0, dfs(tree.left))
+            		right_sum = max(0, dfs(tree.right))
+
+            		path_sum = max(path_sum, tree.val + left_sum + right_sum)
+            		return tree.val + max(left_sum, right_sum)
+
+        	dfs(root)
+        	return path_sum
