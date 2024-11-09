@@ -99,7 +99,7 @@ class Solutions:
 	 	'''
         	is_balance = True
         
-		def dfs(tree: Optional[TreeNode]):
+		def dfs(tree: Optional[TreeNode]) -> int:
 			'''DFS Through Tree
 
       			Args:
@@ -342,3 +342,45 @@ class Solutions:
                 		return node.val
             
             		cur = node.right
+
+	def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+		'''Reconstruct Binary Tree from preorder and inorder traversal
+
+  		Space Complexity: O(n) -> Index Counter
+    		Time Complexity: O(n) -> Single Pass
+
+  		Args:
+    			preorder (list): Preorder Traversal
+       			inorder (list): Inorder Traversal
+
+   		Returns:
+     			root (TreeNode): Binary Tree
+		'''
+        	pre_ix = 0
+		indices = {val: ix for ix, val in enumerate(inorder)}
+
+		def dfs(left: int, right: int) -> Optional[TreeNode]:
+			'''DFS through Binary Tree
+
+   			Args:
+      				left (int): Left index
+	  			right (int): Right index
+
+      			Returns:
+	 			root (TreeNode): Binary Tree Node
+     			'''
+			nonlocal pre_ix
+			if left > right:
+				return None
+
+			mid_val = preorder[pre_ix]
+			mid_ix = indices[mid_val]
+			pre_ix += 1
+			
+			root = TreeNode(mid_val)
+			root.left = dfs(left, mid_ix - 1)
+			root.right = dfs(mid_ix + 1, right)
+			return root
+
+		return dfs(0, len(preorder) - 1)
+			
