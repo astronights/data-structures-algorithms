@@ -4,7 +4,7 @@ My solutions to common DSA problems to keep me well-equipped with Data Structure
 
 ## Neetcode 150
 
-Completed: **38 / 150**
+Completed: **53 / 150**
 
 - Arrays & Hashing
 - Two Pointers
@@ -12,6 +12,7 @@ Completed: **38 / 150**
 - Binary Search
 - Sliding Window
 - Linked List
+- Trees
 
 ## More
 
