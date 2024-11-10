@@ -91,7 +91,7 @@ class Solutions:
 		'''Get Top K Frequent Elements from list
 
   		Space Complexity: O(n) -> Frequency Buckets
-    		Time Complexity: O(n) -> Element Iteration
+    		Time Complexity: O(n) -> Bucket Sort
 
   		Args:
     			nums (list): Iterable of numbers
