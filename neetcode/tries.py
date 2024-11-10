@@ -135,3 +135,67 @@ class WordDictionary:
                                 else:
                                     return False
                 return dfs(0, self.trie)
+
+class Solution:
+        # Solution Functions
+
+        def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+                '''Find all words in grid
+
+                Space Complexity: O(m * n + s) -> Seen Grid + Trie
+                Time Complexity: O(m * n * max(s)) -> DFS for each cell
+
+                Values: Grid Dimensions (m, n), Word Lengths (s)
+
+                Args:
+                        board (list): Word Grid
+                        words (list): Iterable of words
+
+                Returns:
+                        out (list): Words found
+                '''
+                R, C = len(board), len(board[0])
+                trie = PrefixTree()
+        
+                out, seen = set(), set()
+                
+                for word in words:
+                        trie.insert(word)
+
+                def dfs(i: int, j: int, cur: str, path: TrieNode):
+                        '''DFS Through Grid
+
+                        Args:
+                                i (int): Row index
+                                j (int): Column index
+                                cur (str): Word so far
+                                path (TrieNode): Trie Node
+                        '''
+                        char = board[i][j]
+                        
+                        if (i < 0 or i == R 
+                            or j < 0 or j == C 
+                            or (i, j) in seen 
+                            or char not in path.nodes):
+                                return
+
+                        nxt_node = path.nodes[char]
+                        nxt_word = cur + char
+
+                        if nxt_node.isWord:
+                                out.add(nxt_word)
+
+                        seen.add((i, j))
+
+                        dfs(i + 1, j, nxt_word, nxt_node)
+                        dfs(i - 1, j, nxt_word, nxt_node)
+                        dfs(i, j + 1, nxt_word, nxt_node)
+                        dfs(i, j - 1, nxt_word, nxt_node)
+
+                        seen.remove((i, j))
+
+                for r in range(R):
+                        for c in range(C):
+                                dfs(r, c, '', trie.trie)
+        
+                return list(out)
