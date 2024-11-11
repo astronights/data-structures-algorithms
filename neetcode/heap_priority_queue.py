@@ -113,3 +113,33 @@ class Solution:
                 		heapq.heappop(min_heap)
 
         	return min_heap[0]
+
+
+	def leastInterval(self, tasks: List[str], n: int) -> int:
+		'''Task Scheduling Least Interval
+
+  		Space Complexity: O(1) -> List of 26
+    		Time Complexity: O(n) -> Task iteration
+
+  		Args:
+    			tasks (list): Iterable of tasks A-Z
+       			n (int): Waiting interval
+
+   		Returns:
+     			total_time (int): Total Time taken
+		'''
+        	count = [0] * 26
+        	for t in tasks:
+            		count[ord(t) - ord('A')] += 1
+
+        	count.sort(reverse = True)
+
+        	maxf = count[0]
+        	idle = (maxf - 1) * n
+
+        	for t in count[1:]:
+            		if t == maxf:
+                		idle += 1
+            		idle -= t
+
+        	return max(0, idle) + len(tasks)
