@@ -1,4 +1,5 @@
 # Heap / Priority Queue Solutions
+import math
 import heapq
 
 class KthLargest:
@@ -89,3 +90,26 @@ class Solution:
                 		heapq.heappop(min_heap)
 
         	return [[p[1], p[2]] for p in min_heap]
+
+	def findKthLargest(self, nums: List[int], k: int) -> int:
+		'''Find K-th largest element in array
+
+  		Space Complexity: O(k) -> Element Heap
+    		Time Complexity: O(n log k) -> Heap IO
+
+      		Args:
+			nums (list): Iterable of elements
+   			k (int): Index of largest element
+
+      		Returns:
+			elem (int): K-th largest element
+   		'''
+        	min_heap = []
+        
+		for n in nums:
+            		heapq.heappush(min_heap, n)
+
+            		if len(min_heap) > k:
+                		heapq.heappop(min_heap)
+
+        	return min_heap[0]
