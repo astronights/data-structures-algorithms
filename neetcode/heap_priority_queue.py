@@ -35,3 +35,31 @@ class KthLargest:
         	if len(self.heap) > self.k:
             		heapq.heappop(self.heap)
         	return self.heap[0]
+
+class Solution:
+	# Solution Functions
+	
+	def lastStoneWeight(self, stones: List[int]) -> int:
+		'''Last Stone Weight after smashing
+
+  		Space Complexity: O(n) -> Stone Iteration
+    		Time Complexity: O(n log n) -> Heap IO
+
+      		Args:
+			stones (list): Iterable of weights
+
+   		Returns:
+     			out (int): Remaining stone
+		'''
+        	stones = [-x for x in stones]
+        	heapq.heapify(stones)
+
+        	while len(stones) > 1:
+            		a = heapq.heappop(stones)
+			b = heapq.heappop(stones)
+
+            		diff = abs(a - b)
+			if diff:
+                		heapq.heappush(stones, -diff)
+
+        	return -stones[0] if stones else 0
