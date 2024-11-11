@@ -42,7 +42,7 @@ class Solution:
 	def lastStoneWeight(self, stones: List[int]) -> int:
 		'''Last Stone Weight after smashing
 
-  		Space Complexity: O(n) -> Stone Iteration
+  		Space Complexity: O(n) -> Stone Weight Heap
     		Time Complexity: O(n log n) -> Heap IO
 
       		Args:
@@ -63,3 +63,29 @@ class Solution:
                 		heapq.heappush(stones, -diff)
 
         	return -stones[0] if stones else 0
+
+
+	def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+		'''K Closest Points to Origin
+
+  		Space Complexity: O(k) -> Point Heap
+    		Time Complexity: O(n log k) -> Heap IO
+
+      		Args:
+			points (list): Iterable of co-ordinates
+   			k (int): Index of closest points
+
+      		Returns:
+			c_points (list): K Closest Points
+   		'''
+        	min_heap = []
+        
+		for p in points:
+            		x, y = p[0], p[1]
+            		d = math.sqrt(x**2 + y**2)
+            		heapq.heappush(min_heap, (-d, x, y))
+
+            		if len(min_heap) > k:
+                		heapq.heappop(min_heap)
+
+        	return [[p[1], p[2]] for p in min_heap]
