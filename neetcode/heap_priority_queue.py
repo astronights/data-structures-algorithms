@@ -226,3 +226,58 @@ class Twitter:
 		'''
         	if followeeId in self.follows[followerId]:
             		self.follows[followerId].remove(followeeId)
+
+
+class MedianFinder:
+
+	def __init__(self):
+		'''Median in Data Stream
+
+  		Space Complexity: O(n) -> Two Heaps
+
+    		Values: Stream size (n)
+    		'''
+		# Ascending numbers
+        	self.up = []
+
+		# Descending numbers
+        	self.down = []
+
+    	def addNum(self, num: int) -> None:
+		'''Add Number from Stream
+
+  		Time Complexity: O(log n) -> Heap IO
+
+    		Values: Stream size (n)
+
+      		Args:
+			num (int): Streaming value
+   		'''
+
+    		if self.up and num > self.up[0]:
+            		heapq.heappush(self.up, num)
+        	else:
+            		heapq.heappush(self.down, -num)   
+
+		# Reorder heaps
+        	if len(self.up) > len(self.down) + 1:
+            		val = heapq.heappop(self.up)
+            		heapq.heappush(self.down, -val)
+		if len(self.down) > len(self.up) + 1:
+            		val = heapq.heappop(self.down)
+            		heapq.heappush(self.up, -val)
+
+	def findMedian(self) -> float:
+		'''Find Median
+
+  		Time Complexity: O(1) -> Heap Peek
+
+    		Returns:
+      			median (float): Median
+	 	'''
+        	if len(self.up) == len(self.down):
+            		return (self.up[0] - self.down[0]) / 2
+        	elif len(self.up) > len(self.down):
+            		return self.up[0]
+        	else:
+            		return - self.down[0]
