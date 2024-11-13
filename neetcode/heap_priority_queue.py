@@ -1,6 +1,7 @@
 # Heap / Priority Queue Solutions
 import math
 import heapq
+from collections import defaultdict
 
 class KthLargest:
 
@@ -143,3 +144,85 @@ class Solution:
             		idle -= t
 
         	return max(0, idle) + len(tasks)
+
+
+class Twitter:
+
+	def __init__(self):
+		'''Design Twitter
+
+		Space Complexity: O(m * n) -> Users and Tweets
+
+  		Values: Number of Users (m), number of tweets (n)
+  		'''
+        	self.count = 0
+        	self.tweets = defaultdict(list)
+        	self.follows = defaultdict(set)
+
+	def postTweet(self, userId: int, tweetId: int) -> None:
+		'''Post Tweet
+
+  		Time Complexity: O(1) -> List Append
+
+    		Args:
+      			userId (int): User 
+	 		tweetId (int): Tweet
+    		'''
+        	self.tweets[userId].append((self.count, tweetId))
+        	self.count -= 1
+
+	def getNewsFeed(self, userId: int) -> List[int]:
+		'''Get Top 10 Tweets for User
+
+  		Time Complexity: O(m + log n) -> Tweet Iteration
+
+    		Values: Number of users (m), Number of tweets (n)
+
+      		Args:
+			userId (int): User
+
+   		Returns:
+     			feed (list): Tweet Ids
+		'''
+        	feed = []
+        	post_heap = []
+        	self.follows[userId].add(userId)
+
+        	for follower in self.follows[userId]:
+            		if follower in self.tweets:
+                		ix = len(self.tweets[follower]) - 1
+                		c, tid = self.tweets[follower][ix]
+                		heapq.heappush(post_heap, [c, tid, follower, ix])
+
+        	while post_heap and len(feed) < 10:
+            		c, tid, follower, ix = heapq.heappop(post_heap)
+            		feed.append(tid)
+            		
+			if ix > 0:
+                		c, tid = self.tweets[follower][ix - 1]
+                		heapq.heappush(post_heap, [c, tid, follower, ix - 1])
+        	return feed
+            
+
+    	def follow(self, followerId: int, followeeId: int) -> None:
+		'''Add Follow connection
+
+  		Time Complexity: O(1) -> Set Add
+
+    		Args:
+      			followerId (int): Follower
+	 		followeeId (int): Followee
+		'''
+        	self.follows[followerId].add(followeeId)
+
+	def unfollow(self, followerId: int, followeeId: int) -> None:
+		'''UnFollow connection
+
+  		Time Complexity: O(1) -> Set Remove
+
+    		Args:
+      			followerId (int): Follower
+	 		followeeId (int): Followee
+		'''
+        	if followeeId in self.follows[followerId]:
+            		self.follows[followerId].remove(followeeId)
