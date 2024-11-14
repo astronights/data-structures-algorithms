@@ -54,3 +54,27 @@ class Solution:
             		else:
                 		res.append([start, end])
         	return res
+
+	def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+		'''Count Minimum non-overlapping intervals
+
+  		Space Complexity: O(n) -> Tim Sort
+    		Time Complexity: O(n log n) -> Tim Sort
+
+      		Args:
+			intervals (list): Iterable of intervals
+
+   		Returns:
+     			count (int): Number of intervals to remove
+		'''
+        	prev = -50001
+		count = 0
+
+        	intervals.sort(key=lambda pair: pair[1])
+        
+        	for start, end in intervals:
+            		if start < prev:
+                		count += 1
+            		else:
+                		prev = end
+        	return count
