@@ -32,3 +32,25 @@ class Solution:
                 		end = max(end, ix_end)
         
         	return out + [[start, end]]
+
+	def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+		'''Merge Intervals
+
+  		Space Complexity: O(n) -> New Interval List
+    		Time Complexity: O(n log n) -> Tim Sort
+
+      		Args:
+			intervals (list): Iterable of intervals
+
+   		Returns:
+     			res (list): Merged intervals
+		'''
+        	intervals.sort()
+        	res = [intervals[0]]
+
+        	for start, end in intervals[1:]:
+            		if start <= res[-1][1]:
+                		res[-1][1] = max(res[-1][1], end)
+            		else:
+                		res.append([start, end])
+        	return res
