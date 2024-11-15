@@ -138,4 +138,41 @@ class Solution:
             		count += heapq.heappop(time_heap)[1]
             		rooms = max(rooms, count)
 
-        	return min_rooms
+        	return rooms
+
+	def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
+		'''Minimum intervals to include queries
+
+  		Space Complexity: O(n) -> Min Heap
+    		Time Complexity: O(n log n) -> Heap IO
+
+      		Values: Number of intervals (n)
+
+      		Args:
+			intervals (list): Iterable of intervals
+   			queries (list): Iterable of values
+
+		Returns:
+  			res (list): Smallest windows for queries
+     		'''
+        	intervals.sort()
+        	time_heap = []
+        	
+		res = {}
+        	i = 0
+        
+        	for q in sorted(queries):
+			# Add values as long as interval starts before query
+            		while i < len(intervals) and intervals[i][0] <= q:
+				
+                		l, r = intervals[i]
+                		heapq.heappush(time_heap, (r - l + 1, r))
+                		i += 1
+
+			# Remove values where interval ends before query
+            		while time_heap and time_heap[0][1] < q:
+                		heapq.heappop(time_heap)
+				
+            		res[q] = time_heap[0][0] if time_heap else -1
+
+        	return [res[q] for q in queries]
