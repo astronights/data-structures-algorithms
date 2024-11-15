@@ -43,3 +43,30 @@ class Solution:
             		if i + nums[i] >= start:
                 		start = i
         	return start == 0
+
+	def jump(self, nums: List[int]) -> int:
+		'''Minimum number of jumps
+
+  		Space Complexity: O(1) -> Pointers
+    		Time Complexity: O(n) -> Single Pass
+
+		Args:
+  			nums (list): Iterable to jump distances
+
+       		Returns:
+	 		c (int): Minimum jumps
+    		'''
+        	c = 0
+        	end = 0
+        	sofar = -1
+
+        	for i in range(len(nums) - 1):
+            		sofar = max(sofar, i + nums[i])
+
+            		if sofar >= len(nums) - 1:
+                		return c + 1
+
+            		if i == end:
+                		c += 1
+                		end = sofar
+        	return 0
