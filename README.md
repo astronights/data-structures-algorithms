@@ -4,7 +4,7 @@ My solutions to common DSA problems to keep me well-equipped with Data Structure
 
 ## Neetcode 150
 
-Completed: **63 / 150**
+Completed: **69 / 150**
 
 - Arrays & Hashing
 - Two Pointers
@@ -15,6 +15,7 @@ Completed: **63 / 150**
 - Trees
 - Tries
 - Heap / Priority Queue
+- Intervals
 
 ## More
 
