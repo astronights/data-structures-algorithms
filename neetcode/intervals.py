@@ -1,5 +1,17 @@
 # Intervals Solutions
 
+class Interval(object):
+	
+	def __init__(self, start: int, end: int):
+		'''Interval Class
+
+     		Args:
+       			start (int): Beginning of interval
+	  		end (int): End of interval
+     		'''
+        	self.start = start
+        	self.end = end
+
 class Solution:
 	# Solution Functions
 	
@@ -78,3 +90,24 @@ class Solution:
             		else:
                 		prev = end
         	return count
+
+	def canAttendMeetings(self, intervals: List[Interval]) -> bool:
+		'''Check if meetings are not overlapping
+
+  		Space Complexity: O(n) -> Tim Sort
+    		Time Complexity: O(n log n) -> Tim Sort
+
+      		Args:
+			intervals (list): Iterable of intervals
+
+   		Returns:
+			can_attend (bool): If no overlap in meetings
+   		'''
+		prev = -1
+        	intervals.sort(key=lambda x: x.start)
+        
+		for interval in intervals:
+            		if interval.start < prev:
+                		return False
+            		prev = interval.end
+        	return True
