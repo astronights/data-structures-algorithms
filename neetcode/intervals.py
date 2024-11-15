@@ -1,4 +1,5 @@
 # Intervals Solutions
+import heapq
 
 class Interval(object):
 	
@@ -111,3 +112,30 @@ class Solution:
                 		return False
             		prev = interval.end
         	return True
+
+	def minMeetingRooms(self, intervals: List[Interval]) -> int:
+		'''Minimum number of meeting rooms required
+
+  		Space Complexity: O(n) -> Min Heap
+    		Time Complexity: O(n log n) -> Heap IO
+
+      		Args:
+			intervals (list): Iterable of intervals
+
+   		Returns:
+			rooms (int): Minimum number of rooms
+   		'''
+        	time_heap = []
+        
+		for interval in intervals:
+            		heapq.heappush(time_heap, (interval.start, 1))
+            		heapq.heappush(time_heap, (interval.end, -1))
+
+        	rooms = 0
+        	count = 0
+        
+		while time_heap:
+            		count += heapq.heappop(time_heap)[1]
+            		rooms = max(rooms, count)
+
+        	return min_rooms
