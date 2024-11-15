@@ -70,3 +70,29 @@ class Solution:
                 		c += 1
                 		end = sofar
         	return 0
+
+	def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+		'''Can Complete Circuit
+
+  		Space Complexity: O(1) -> Tracking variables
+    		Time Complexity: O(n) -> Single Pass
+
+  		Args:
+    			gas (list): Iterable of gas fillings
+       			cost (list): Iterable of costs
+
+   		Returns:
+     			start (int): Start index
+		''' 
+        	if sum(gas) < sum(cost):
+            		return -1
+        
+        	start = 0
+        	cur_gas = 0
+        
+		for i in range(len(gas)):
+            		cur_gas += gas[i] - cost[i]
+            		if cur_gas < 0:
+                		start = i + 1
+                		cur_gas = 0
+        	return start
