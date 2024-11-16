@@ -168,3 +168,49 @@ def Solution:
 
         	dfs([], target, 0)
         	return subs
+
+	def exist(self, board: List[List[str]], word: str) -> bool:
+		'''Check if word exists on grid
+
+  		Space Complexity: O(m * n) -> Grid size
+    		Time Complexity: O(m * n * 4 ^ w) -> Grid exploration by character
+
+      		Args:
+			board (list): Grid
+   			word (str): Iterable of characters
+
+      		Returns:
+			is_exists (bool): If word exists in grid
+   		'''
+		seen = set()
+       		R, C = len(board), len(board[0])
+        	dirs = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        
+		def dfs(x: int, y: int, i: int):
+			'''DFS through grid
+
+   			Args:
+      				x (int): Row
+	  			y (int): Column
+      				i (int): Character index of word
+
+     			Returns:
+				is_word (bool): If word exists
+    			'''
+            		if i == len(word):
+                		return True
+            		if (x < 0 or x >= R or y < 0 or y >= C 
+			    or board[x][y] != word[i] or (x, y) in seen):
+                		return False
+            
+            		seen.add((x, y))
+            		res = any((dfs(x + dx, y + dy, i+1) for dx, dy in dirs))
+            		seen.remove((x, y))
+            		return res
+
+        	for i in range(R):
+            		for j in range(C):
+                		if board[i][j] == word[0]:
+                    			if dfs(i, j, 0):
+                        			return True
+        	return False
