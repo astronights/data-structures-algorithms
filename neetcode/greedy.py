@@ -1,4 +1,5 @@
 # Greedy Solutions
+from collections import Counter
 
 class Solution:
 	# Solution Functions
@@ -96,3 +97,39 @@ class Solution:
                 		start = i + 1
                 		cur_gas = 0
         	return start
+
+	def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+		'''Is hand of straights
+
+  		Space Complexity: O(n) -> Frequency Counter
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			hand (list): Iterable of values
+   			groupSize (int): Size of straight
+
+      		Returns:
+			is_straight (bool): If hand of straights exists
+   		'''
+		if len(hand) % groupSize != 0:
+            		return False
+        
+		count = Counter(hand)
+
+        	for card in hand:
+			if count.get(card, 0) == 0:
+                		continue
+
+			# Get the earliest card in sequence
+			start = card
+            		while count.get(start - 1, 0) > 0:
+                		start -= 1
+            
+			# Check the sequence
+			for i in range(start, start + groupSize):
+                		if count.get(i, 0) == 0:
+                    			count[i] -= 1
+                		else:
+                    			return False
+
+        	return True
