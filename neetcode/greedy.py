@@ -184,3 +184,37 @@ class Solution:
                 		parts.append(i - prev + 1)
                 		prev = i + 1
         	return parts
+
+	def checkValidString(self, s: str) -> bool:
+		'''Check valid parenthesis string with wildcard
+
+    		Space Complexity: O(1) -> Greedy Pointers
+      		Time Complexity: O(n) -> Single Pass
+
+ 		Args:
+   			s (str) -> Iterable of characters
+
+		Returns:
+  			is_valid (bool) -> If string can be valid
+     		'''
+		# Keeping track of min and max open parentheses
+        	left_min = 0
+        	left_max = 0
+
+        	for c in s:
+            		if c == '(':
+                		left_min += 1
+                		left_max += 1
+            		elif c == ')':
+                		left_min -= 1
+                		left_max -= 1
+            		else:
+                		left_min -= 1
+                		left_max += 1
+            
+            		if left_max < 0:
+                		return False
+            		if left_min < 0:
+                		left_min = 0
+        	
+		return left_min == 0
