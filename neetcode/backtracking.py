@@ -66,3 +66,33 @@ def Solution:
         	
 		dfs([], target, 0)
         	return subs
+
+	def permute(self, nums: List[int]) -> List[List[int]]:
+		'''Generate all permutations
+
+  		Space Complexity: O(n * n!) -> Permutations
+    		Time Complexity: O(n * n!) -> Permutations
+
+		Args:
+  			nums (list): Iterable of numbers
+
+       		Returns:
+	 		perms (int): Permutations
+    		'''
+        	perms = []
+        
+		def dfs(cur: list, vals: list):
+			'''DFS through values
+
+   			Args:
+      				cur (list): Current subset
+	  			vals (list): Remaining values
+			'''
+            		if len(cur) == len(nums):
+                		perms.append(cur)
+            
+            		for i, v in enumerate(vals):
+                		dfs(cur + [v, ], vals[:i] + vals[i+1:])
+
+        	dfs([], nums)
+        	return perms
