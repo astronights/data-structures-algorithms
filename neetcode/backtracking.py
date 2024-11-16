@@ -96,3 +96,36 @@ def Solution:
 
         	dfs([], nums)
         	return perms
+
+	def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+		'''Possible subsets of list with duplicates
+
+  		Space Complexity: O(n * 2 ^ n) -> Power Set
+    		Time Complexity: O(n * 2 ^ n) -> Power Set
+
+      		Args:
+			nums (list): Iterable of numbers
+
+   		Returns:
+     			subs (list): All Possible Subsets
+   		'''
+        	subs = []
+        	nums.sort()
+
+        	def dfs(cur: list, ix: int):
+			'''DFS through values
+
+   			Args:
+      				cur (list): Current subset
+	  			ix (int): Remaining index on list
+			'''
+            		subs.append(cur)
+            		prev = -21 # Below minimum permissable number
+            
+			for i in range(ix, len(nums)):
+                		if nums[i] != prev:
+                    			dfs(cur + [nums[i], ], i + 1)
+                		prev = nums[i]
+
+        	dfs([], 0)
+        	return subs
