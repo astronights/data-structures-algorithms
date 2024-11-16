@@ -156,3 +156,31 @@ class Solution:
                 		cur = [max(a, cur[0]), max(b, cur[1]), max(c, cur[2])]
         	
 		return cur == target
+
+	def partitionLabels(self, s: str) -> List[int]:
+		'''Partition labels
+
+  		Space Complexity: O(n) -> Last Seen Counter
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			s (str) -> Iterable of characters
+
+   		Returns:
+     			parts (list): Partition counts
+		'''
+        	seen = {}
+        	for i, c in enumerate(s):
+            		seen[c] = i
+
+        	sofar = 0
+        	prev = 0
+        	parts = []
+
+        	for i, c in enumerate(s):
+            		sofar = max(sofar, seen[c])
+
+            		if i == sofar:
+                		parts.append(i - prev + 1)
+                		prev = i + 1
+        	return parts
