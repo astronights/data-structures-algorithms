@@ -133,3 +133,26 @@ class Solution:
                     			return False
 
         	return True
+
+	def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:
+		'''Possibility to Merge Triplets
+
+  		Space Complexity: O(1) -> Triplet tuple
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			triplets (list): Iterable of triplets
+   			target (list): Target triplet
+
+       		Returns:
+	 		is_target (bool): If target is attainable
+    		'''
+        	x, y, z = target
+        	cur = [0, 0, 0]
+        
+		for triple in triplets:
+            		a, b, c = triple
+            		if a <= x and b <= y and c <= z:
+                		cur = [max(a, cur[0]), max(b, cur[1]), max(c, cur[2])]
+        	
+		return cur == target
