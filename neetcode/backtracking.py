@@ -59,10 +59,10 @@ def Solution:
             		if diff == 0:
                 		subs.append(cur)
                 		return
-            		for i, num in enumerate(nums[ix:]):
-                		if num > diff:
+            		for i in range(ix, len(nums):
+                		if nums[i] > diff:
                     			break
-                		dfs(cur + [num, ], diff - num, ix + i)
+                		dfs(cur + [nums[i], ], diff - nums[i], i)
         	
 		dfs([], target, 0)
         	return subs
@@ -128,4 +128,43 @@ def Solution:
                 		prev = nums[i]
 
         	dfs([], 0)
+        	return subs
+
+	def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+		'''Possible combinations that sum to target with duplicates
+
+  		Space Complexity: O(n * 2 ^ n) -> Power Set
+    		Time Complexity: O(n * 2 ^ n) -> Power Set
+
+      		Args:
+			candidates (list): Iterable of numbers
+   			target (int): Sum target
+
+   		Returns:
+     			subs (list): All Possible Subsets
+   		'''
+        	candidates.sort()
+        	subs = []
+
+        	def dfs(cur: list, diff: int, ix: int):
+			'''DFS through values
+
+   			Args:
+      				cur (list): Current subset
+	  			diff (int): Remaining difference
+	  			ix (int): Remaining index on list
+			'''
+            		if diff == 0:
+                		subs.append(cur)
+
+            		prev = 0 # Below permissable value
+            		
+			for i in range(ix, len(candidates)):
+                		if candidates[i] > diff:
+                    			break
+                		elif candidates[i] != prev:
+                    			dfs(cur + [candidates[i], ], diff - candidates[i], i + 1)
+                		prev = nums[i]
+
+        	dfs([], target, 0)
         	return subs
