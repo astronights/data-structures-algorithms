@@ -246,3 +246,37 @@ def Solution:
                     			dfs(cur + [sub,], rest[i:])
         	dfs([], s)
         	return parts 
+
+	def letterCombinations(self, digits: str) -> List[str]:
+		'''Letter combinations of phone number
+
+  		Space Complexity: O(n * 4 ^ n) -> Letter Exponentiation
+    		Time Complexity: O(n * 4 ^ n) -> Letter Exponentiation
+
+      		Args:
+			digits (str) -> Iterable of numbers
+
+   		Returns:
+     			letters (list) -> Possible combinations
+		'''
+        	keys = ['', '', 'abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']
+
+        	letters = []
+        
+		def dfs(cur: str, nums: str):
+			'''DFS through digits
+
+      			Args:
+	 			cur (str): Current letter combination
+     				nums (str): Remaining numbers
+	 		'''
+            		if not nums:
+                		if cur:
+                    			letters.append(cur)
+            		else:
+                		d = int(nums[0])
+                		for c in keys[d]:
+                    			dfs(cur + c, nums[1:])
+        	
+		dfs('', digits)
+        	return letters
