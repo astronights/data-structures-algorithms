@@ -280,3 +280,59 @@ def Solution:
         	
 		dfs('', digits)
         	return letters
+
+	def solveNQueens(self, n: int) -> List[List[str]]:
+		'''Solve N Queens
+
+    		Space Complexity: O(n ^ 2 * n!) ->  Final Results
+      		Time Complexity: O(n + 1 !) -> Possible N Queens Layouts
+
+ 		Args:
+   			n (int): Size of the board
+
+      		Returns:
+			queens (list): Possible orientations of queens
+   		'''
+        	positions = []
+        
+		def compute_possible(prev: list):
+			'''Compute positions of queens
+
+      			Args:
+	 			prev (list): Indices of queens by row
+
+			Returns:
+   				squares (list): Possible positions
+       			'''
+            		squares = set(range(n))
+            
+			for i, v in enumerate(prev):
+                    		squares.discard(v)
+                		squares.discard(v + len(prev) - i)
+                    		squares.discard(v - (len(prev) - i))
+
+            		return squares
+            
+        	def dfs(prev: list):
+			'''Run DFS through the rows
+
+   			Args:
+      				prev (int): Indices of queens by row
+			'''
+            		if len(prev) == n:
+                		positions.append(prev)
+
+            		possibles = compute_spots(prev)
+                	for pos in possibles:
+                    		dfs(prev + [pos,])
+        		dfs([])
+        
+        	queens = []
+        	
+		for places in positions:
+            		queens.append([['.'] * n for _ in range(n)])
+            		for r, c in enumerate(places):
+                		queens[-1][r][c] = 'Q'
+                		queens[-1][r] = ''.join(queens[-1][r])
+
+	        return queens
