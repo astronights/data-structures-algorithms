@@ -214,3 +214,35 @@ def Solution:
                     			if dfs(i, j, 0):
                         			return True
         	return False
+
+	def partition(self, s: str) -> List[List[str]]:
+		'''Partition palindromes
+
+  		Space Complexity: O(n * 2 ^ n) -> Possible partitions
+    		Time Complexity: O (n * 2 ^ n) -> Possible partitions
+
+      		Args:
+			s (str) -> Iterable of characters
+
+   		Returns:
+     			parts (list): Possible Partitioned Strings
+		'''
+        	parts = []
+        
+		def dfs(cur: list, rest: str):
+			'''DFS through string
+
+   			Args:
+      				cur (list): Current partitioned subset
+	  			rest (str): Remaining characters
+    			'''
+            		if not rest:
+                		parts.append(cur)
+            		
+			for i in range(1, len(rest) + 1):
+                		sub = rest[:i]
+                		
+				if sub == sub[::-1]:
+                    			dfs(cur + [sub,], rest[i:])
+        	dfs([], s)
+        	return parts 
