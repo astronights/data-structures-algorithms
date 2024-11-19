@@ -373,7 +373,7 @@ class LRUNode:
 		self.prev = prev
 		self.nxt = nxt
 
-class LRUCache
+class LRUCache:
 	def __init__(self, capacity: int):
 		'''LRU Cache implementation with Doubly Linked List
 
@@ -453,4 +453,3 @@ class LRUCache
 		if len(self.cache) > self.capacity:
 			del self.cache[self.left.nxt.key]
 			self.remove(self.left.nxt)
-			
