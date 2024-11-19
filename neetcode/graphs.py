@@ -133,3 +133,44 @@ class Solution:
             		nodes[key].neighbors = [nodes[x] for x in key.neighbors]
 
         	return nodes[node]
+
+	def islandsAndTreasure(self, grid: List[List[int]]) -> None:
+		'''Distance to Treasure Chests
+
+  		Space Complexity: O(m * n) -> Grid shape
+    		Time Complexity: O(m * n) -> BFS
+
+      		Values: Grid dimensions (m x n)
+
+ 		Args:
+   			grid (list): Geaographical Grid
+		'''
+		queue = deque()
+        	R, C = len(grid), len(grid[0])
+        	
+        	for i in range(R):
+            		for j in range(C):
+                		if grid[i][j] == 0:
+                    			queue.append((i, j, 0))
+
+		seen = set()
+        	dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        	while queue:
+            		x, y, d = queue.popleft()
+            
+            		if (x, y) in seen:
+                		continue
+
+			grid[x][y] = d
+            		seen.add((x, y))
+
+            		for dx, dy in dirs:
+                		nx, ny = x + dx, y + dy
+                
+                	if (nx >= 0 and nx < R 
+			    and ny >= 0 and ny < C 
+			    and grid[nx][ny] == 2147483647):
+                    		queue.append((nx, ny, d + 1))
+
+        
