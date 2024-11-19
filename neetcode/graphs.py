@@ -1,6 +1,17 @@
 # Graphs Solutions
 from collections import deque
 
+class Node:
+	def __init__(self, val = 0, neighbors = None):
+		'''Graph Node
+
+    		Args:
+      			val (int): Node Value
+	 		neighbors (list): Neighboring nodes
+		'''
+        	self.val = val
+        	self.neighbors = neighbors if neighbors is not None else []
+
 class Solution:
 	# Solution Functions
 
@@ -90,3 +101,35 @@ class Solution:
 
                     			max_area = max(max_area, cur_area)
 		return max_area
+
+	def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+		'''Clone Graph
+
+  		Space Complexity: O(V) -> V Nodes
+    		Time Complexity: O(V + E) -> Nodes + Edges
+
+      		Values: Vertices (V), Edges (E)
+
+      		Args:
+			node (Node): Graph Node
+
+   		Returns:
+     			copy_node (Node): Copied Graph Node
+		'''		
+        	if not node:
+            		return None
+        	nodes = {}
+        	queue = deque([node])
+        
+		while queue:
+            		cur = queue.popleft()
+            		nodes[cur] = Node(cur.val)
+            		
+			for n in cur.neighbors:
+                		if n not in nodes:
+                    			queue.append(n)
+        
+        	for key in nodes.keys():
+            		nodes[key].neighbors = [nodes[x] for x in key.neighbors]
+
+        	return nodes[node]
