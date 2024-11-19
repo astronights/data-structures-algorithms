@@ -222,3 +222,57 @@ class Solution:
                     			queue.append((nx, ny, d + 1))
 
         	return max_d if n_fresh == 0 else -1
+
+	def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+		'''Pacific Atlantic Oceans Water Flow
+
+		Space Complexity: O(m * n) -> Grid shape
+    		Time Complexity: O(m * n) -> BFS
+
+      		Values: Grid dimensions (m x n)
+
+ 		Args:
+   			heights (list): Water Grid
+
+      		Returns:
+			peaks (list): Points where water can flow to both
+   		'''	
+        	pacific = set()
+        	atlantic = set()
+        	R, C = len(heights), len(heights[0])
+
+        	for i in range(R):
+            		pacific.add((i, 0))
+            		atlantic.add((i, C - 1))
+        	for j in range(C):
+            		pacific.add((0, j))
+            		atlantic.add((R - 1, j))
+
+        	dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        	def bfs(starts: set, visited: set):
+			'''BFS Through Points
+
+   			Args:
+      				starts (list): Starting co-ordinates
+	  			visited (list): Visited co-ordinates
+      			'''
+            		queue = deque(starts)
+            		while queue:
+                		x, y = queue.popleft()
+
+                		for dx, dy in dirs:
+                    			nx, ny = x + dx, y + dy
+
+                    		if (nx >= 0 and nx < R 
+				    and ny >= 0 and ny < C 
+				    and (nx, ny) not in visited 
+				    and heights[nx][ny] >= heights[x][y]):
+                        		queue.append((nx, ny))
+                        		visited.add((nx, ny))
+
+        	bfs(pacific, pacific)
+        	bfs(atlantic, atlantic)
+
+        	return [x for x in pacific if x in atlantic]
+        
