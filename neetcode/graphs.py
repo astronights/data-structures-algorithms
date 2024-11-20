@@ -329,7 +329,7 @@ class Solution:
 	def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 		'''Can Schedule Courses
 
-  		Space Complexity: O(V) -> Topological Sort
+  		Space Complexity: O(V + E) -> Topological Sort
     		Time Complexity: O(V + E) -> Topological Sort
 
       		Values: Number of courses (V), Number of prerequisites (E)
@@ -375,7 +375,7 @@ class Solution:
 	def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
 		'''Find order of course schedules
 
-		Space Complexity: O(V) -> Topological Sort
+		Space Complexity: O(V + E) -> Topological Sort
     		Time Complexity: O(V + E) -> Topological Sort
 
       		Values: Number of courses (V), Number of prerequisites (E)
@@ -427,7 +427,7 @@ class Solution:
 	def validTree(self, n: int, edges: List[List[int]]) -> bool:
 		'''Check if graph is valid tree
 
-  		Space Complexity: O(V) -> Topological Sort
+  		Space Complexity: O(V + E) -> Topological Sort
     		Time Complexity: O(V + E) -> Topological Sort
 
       		Values: Number of nodes (V), Number of edges (E)
@@ -467,3 +467,46 @@ class Solution:
             		return True
 
         	return dfs(0, -1) and len(visited) == n
+
+	def countComponents(self, n: int, edges: List[List[int]]) -> int:
+		'''Count Connected Components
+
+		Space Complexity: O(V + E) -> DFS
+    		Time Complexity: O(V + E) -> DFS
+
+      		Values: Number of nodes (V), Number of edges (E)
+
+		Args:
+  			n (int): Number of nodes
+     			edges (list): Edges
+
+ 		Returns:
+   			cc (int): Number of connected components
+      		'''  		
+        	graph = {i: [] for i in range(n)}
+        	for a, b in edges:
+            		graph[a].append(b)
+            		graph[b].append(a)
+
+        	cc = 0
+
+        	def dfs(cur: int):
+			'''DFS Through Graph
+
+   			Args:
+      				cur (int): Current node
+	  		'''
+            		if cur not in graph:
+                		return
+            
+			nodes = graph[cur]
+            		del graph[cur]
+
+            		for n in nodes:
+                		dfs(n)
+
+        	while graph:
+            		cc += 1
+            		dfs(list(graph.keys())[0])
+
+        	return cc
