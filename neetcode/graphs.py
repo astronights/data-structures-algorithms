@@ -324,3 +324,50 @@ class Solution:
                     			board[i][j] = 'O'
                 		else:
                     			board[i][j] = 'X'
+
+
+	def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+		'''Can Schedule Courses
+
+  		Space Complexity: O(V) -> Topological Sort
+    		Time Complexity: O(V + E) -> Topological Sort
+
+      		Values: Number of courses (V), Number of prerequisites (E)
+
+		Args:
+  			numCourses (int): Number of courses
+     			prerequisites (list): Prerequisite mapping
+
+ 		Returns:
+   			can_schedule (bool): If Course Schedule is Possible
+      		'''
+        	pre = {i: [] for i in range(numCourses)}
+        	for a, b in prerequisites:
+            		pre[a].append(b)
+
+        	visited = set()
+
+        	def dfs(cur: int):
+			'''DFS through course map
+
+   			Args:
+      				cur (int): Course index
+
+   			Returns:
+      				can_schedule (int): Consistency of prerequisites
+			'''
+            		if cur in visited:
+                		return False
+
+            		visited.add(cur)
+            		for p in pre[cur]:
+                		if not dfs(p):
+                    			return False
+            		visited.remove(cur)
+            		
+			return True
+
+        	for i in range(numCourses):
+            		if not dfs(i):
+                		return False
+        	return True
