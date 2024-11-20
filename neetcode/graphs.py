@@ -510,3 +510,49 @@ class Solution:
             		dfs(list(graph.keys())[0])
 
         	return cc
+
+
+	def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+		'''Find Redundant Connection
+
+		Space Complexity: O(V + E) -> BFS
+    		Time Complexity: O(V + E) -> BFS
+
+      		Values: Number of nodes (V), Number of edges (E)
+
+		Args:
+     			edges (list): Edges
+
+ 		Returns:
+   			red (list): Redundant Edge
+      		'''
+		n = len(edges)
+        	indegree = [0] * (n + 1)
+        	adj = [[] for _ in range(n + 1)]
+        
+		for a, b in edges:
+            	adj[a].append(b)
+            	adj[b].append(a)
+            	indegree[a] += 1
+            	indegree[b] += 1
+
+        	queue = deque()
+
+        	for i in range(1, n + 1):
+            		if indegree[i] == 1:
+                		queue.append(i)
+
+        	while queue:
+            		node = queue.popleft()
+            		indegree[node] -= 1
+            		
+			for n in adj[node]:
+                		indegree[n] -= 1
+                		if indegree[n] == 1:
+                    			queue.append(n)
+
+        	for a, b in edges[::-1]:
+            		if indegree[a] == 2 and indegree[b]:
+                		return [a, b]
+        
+        	return []
