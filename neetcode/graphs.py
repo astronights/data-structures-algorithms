@@ -347,14 +347,14 @@ class Solution:
 
         	visited = set()
 
-        	def dfs(cur: int):
+        	def dfs(cur: int) -> bool:
 			'''DFS through course map
 
    			Args:
       				cur (int): Course index
 
    			Returns:
-      				can_schedule (int): Consistency of prerequisites
+      				can_schedule (bool): Consistency of prerequisites
 			'''
             		if cur in visited:
                 		return False
@@ -394,14 +394,14 @@ class Solution:
         	schedule = []
         	valid, visited = set(), set()
         
-		def dfs(cur):
+		def dfs(cur) -> bool:
 			'''DFS through course map
 
    			Args:
       				cur (int): Course index
 
    			Returns:
-      				can_schedule (int): Consistency of prerequisites
+      				can_schedule (bool): Consistency of prerequisites
 			'''
             		if cur in visited:
                 		return False
@@ -424,3 +424,46 @@ class Solution:
                 		return []
         	return schedule
         
+	def validTree(self, n: int, edges: List[List[int]]) -> bool:
+		'''Check if graph is valid tree
+
+  		Space Complexity: O(V) -> Topological Sort
+    		Time Complexity: O(V + E) -> Topological Sort
+
+      		Values: Number of nodes (V), Number of edges (E)
+
+		Args:
+  			n (int): Number of nodes
+     			edges(list): Undirected edges
+
+ 		Returns:
+   			is_tree (bool): If graph is tree
+      		'''
+        	graph = {i: [] for i in range(n)}
+        	for a, b in edges:
+            		graph[a].append(b)
+            		graph[b].append(a)
+
+        	visited = set()
+        	
+		def dfs(cur: int, prev: int) -> bool:
+			'''DFS through graph
+
+   			Args:
+      				cur (int): Current node
+	  			prev (int): Previous node
+
+      			Returns:
+	 			is_tree (bool): Is valid tree
+     			'''
+           		if cur in visited:
+                		return False
+            
+            		visited.add(cur)
+            		for n in graph[cur]:
+                		if n != prev:
+                    			if not dfs(n, cur):
+                        			return False
+            		return True
+
+        	return dfs(0, -1) and len(visited) == n
