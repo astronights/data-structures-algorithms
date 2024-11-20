@@ -1,5 +1,5 @@
 # Graphs Solutions
-from collections import deque
+from collections import deque, defaultdict
 
 class Node:
 	def __init__(self, val = 0, neighbors = None):
@@ -556,3 +556,47 @@ class Solution:
                 		return [a, b]
         
         	return []
+
+
+	def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+		'''Word Ladder Length
+
+  		Space Complexity: O(n * m): Dictionary
+    		Time Complexity: O(n * m): BFS
+
+      		Values: Number of words (n), Length of words (m)
+
+ 		Args:
+   			beginWord (str): Start word
+      			endWord (str): End word
+	 		wordList (list): Dictionary
+
+    		Returns:
+      			d (int): Length of Word Ladder
+	 	'''
+        	wild = defaultdict(list)
+        	for word in wordList:
+            		for i in range(len(word)):
+                		star_word = word[:i] + '*' + word[i + 1:]
+                		wild[star_word].append(word)
+
+        	seen = set()
+        	queue = deque([(beginWord, 1)])
+
+        	while queue:
+            		cur, d = queue.popleft()
+
+            		if cur == endWord:
+                		return d
+
+            		for i in range(len(cur)):
+                		star_word = cur[:i] + '*' + cur[i + 1:]
+                		
+				if star_word in seen:
+                    			continue
+                		seen.add(star_word)
+
+                		for next_word in wild[star_word]:
+                    			if next_word != cur:
+                        			queue.append((next_word, d + 1))
+	        return 0
