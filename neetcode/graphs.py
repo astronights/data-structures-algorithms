@@ -276,3 +276,51 @@ class Solution:
 
         	return [x for x in pacific if x in atlantic]
         
+	def solve(self, board: List[List[str]]) -> None:
+		'''Convert Surrounded Regions
+
+  		Space Complexity: O(m * n) -> Grid shape
+    		Time Complexity: O(m * n) -> BFS
+
+      		Values: Grid dimensions (m x n)
+
+ 		Args:
+   			board (list): Grid of Xs and Os
+      		'''
+		edges = deque()
+        	R, C = len(board), len(board[0])
+        
+        	for i in range(R):
+            		if board[i][0] == 'O':
+                		edges.append((i, 0))
+            		if board[i][C - 1] == 'O':
+                		edges.append((i, C - 1))
+        	for j in range(C):
+            		if board[0][j] == 'O':
+                		edges.append((0, j))
+            		if board[R - 1][j] == 'O':
+                		edges.append((R - 1, j))
+
+        	seen = set()
+        	dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        
+		while edges:
+            		x, y = edges.popleft()
+
+            		if (x, y) in seen:
+                		continue
+            		board[x][y] = 'T'
+            		seen.add((x, y))
+
+			for dx, dy in dirs:
+                		nx, ny = x + dx, y + dy
+                		if (nx >= 0 and nx < R and ny >= 0 and ny < C 
+				    and board[nx][ny] == 'O'):
+                    			edges.append((nx, ny))
+
+        	for i in range(R):
+            		for j in range(C):
+                		if board[i][j] == 'T':
+                    			board[i][j] = 'O'
+                		else:
+                    			board[i][j] = 'X'
