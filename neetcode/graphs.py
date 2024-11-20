@@ -371,3 +371,56 @@ class Solution:
             		if not dfs(i):
                 		return False
         	return True
+
+	def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+		'''Find order of course schedules
+
+		Space Complexity: O(V) -> Topological Sort
+    		Time Complexity: O(V + E) -> Topological Sort
+
+      		Values: Number of courses (V), Number of prerequisites (E)
+
+		Args:
+  			numCourses (int): Number of courses
+     			prerequisites (list): Prerequisite mapping
+
+ 		Returns:
+   			schedule (list): Course schedule
+      		'''
+  		pre = {i: [] for i in range(numCourses)}
+        	for a, b in prerequisites:
+            		pre[a].append(b)
+
+        	schedule = []
+        	valid, visited = set(), set()
+        
+		def dfs(cur):
+			'''DFS through course map
+
+   			Args:
+      				cur (int): Course index
+
+   			Returns:
+      				can_schedule (int): Consistency of prerequisites
+			'''
+            		if cur in visited:
+                		return False
+            		if cur in valid:
+                		return True
+            
+            		visited.add(cur)
+            		for p in pre[cur]:
+                		if not dfs(p):
+                    			return False
+            		visited.remove(cur)
+
+            		valid.add(cur)
+            		schedule.append(cur)
+
+            		return True
+
+        	for i in range(numCourses):
+            		if not dfs(i):
+                		return []
+        	return schedule
+        
