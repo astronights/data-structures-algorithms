@@ -114,3 +114,39 @@ class Solution:
                 			heapq.heappush(min_heap, (node[0] + t, node[1]))
 
         	return min_time if len(seen) == n else -1
+
+	def swimInWater(self, grid: List[List[int]]) -> int:
+		'''Swim in Rising Water
+
+  		Space Complexity: O(n ^ 2) -> Grid dimensions
+    		Time Complexity: O(n ^ 2 * log n) -> BFS + Heap IO
+
+      		Args:
+			grid (list): Square matrix of heights
+
+   		Returns:
+     			t (int): Minimum time to swim
+		'''
+        	R, C = len(grid), len(grid[0])
+
+        	t = 0
+        	seen = set()
+        	min_heap = [(grid[0][0], 0, 0)]
+
+        	dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        	while min_heap:
+            		t, x, y = heapq.heappop(min_heap)
+
+            		if x == R - 1 and y == C - 1:
+                		return t
+
+            		if (x, y) in seen:
+                		continue
+			seen.add((x, y))
+
+            	for dx, dy in dirs:
+                	nx, ny = x + dx, y + dy
+                	if nx >= 0 and nx < R and ny >= 0 and ny < C:
+                    		heapq.heappush(min_heap, (max(t, grid[nx][ny]), nx, ny))
+				
