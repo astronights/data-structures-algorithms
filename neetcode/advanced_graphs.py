@@ -76,3 +76,41 @@ class Solution:
             		for p in dists[cur]:
                 		heapq.heappush(min_heap, p)
         	return cost
+
+	def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+		'''Calculate network delay time
+
+  		Space Complexity: O(V + E) -> DFS
+    		Time Complexity: O(E * log V) -> Heap IO
+
+      		Values: Number of nodes (V), number of edges (E)
+
+      		Args:
+			times (list): Edge timings
+   			n (int): Number of nodes
+      			k (int): Starting node
+
+  		Returns:
+    			min_time (int): Minimum propagation time
+       		'''
+        	paths = {i: [] for i in range(1, n + 1)}
+        	for u, v, t in times:
+            		paths[u].append((t, v))
+
+        	min_time = 0
+        	seen = set()
+        	min_heap = [(0, k)]
+
+        	while len(seen) < n and min_heap:
+            		t, v = heapq.heappop(min_heap)
+            		if v in seen:
+                		continue
+
+            		min_time = t
+            		seen.add(v)
+
+            		for node in paths[v]:
+				if node[1] not in seen:
+                			heapq.heappush(min_heap, (node[0] + t, node[1]))
+
+        	return min_time if len(seen) == n else -1
