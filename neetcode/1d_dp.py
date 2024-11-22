@@ -225,3 +225,28 @@ class Solution:
             		max_product = max(max_product, c_max)
 			
         	return max_product
+
+	def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+		'''Check if word break is possible
+
+  		Space Complexity: O(n) -> DP Array
+    		Time Complexity: O(n * k) -> Word iteration
+
+		Values: Length of string (n), Number of words (k)
+
+  		Args:
+    			s (str): Iterable of characters
+       			wordDict (list): Word Dictionary
+
+    		Returns:
+      			is_word_break (bool): If string can be broken into words
+	 	'''
+        	dp = [False] * (len(s) + 1)
+        	dp[0] = True
+
+        	for i in range(1, len(s) + 1):
+            		for word in wordDict:
+                		size = len(word)
+                		if i >= size and s[i - size: i] == word:
+                    			dp[i] = dp[i] or dp[i - size]
+        	return dp[-1]
