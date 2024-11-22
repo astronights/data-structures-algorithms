@@ -200,3 +200,28 @@ class Solution:
                     			dp[val] = min(dp[val], dp[val - c] + 1)
         	
 		return dp[-1] if dp[-1] < 10001 else -1
+
+	def maxProduct(self, nums: List[int]) -> int:
+		'''Maximum product of subarray
+
+  		Space Complexity: O(1) -> Tracked maximums and minimums
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			nums (list): Iterable of numbers
+
+   		Returns:
+     			max_product (int): Maximum product
+		'''
+        	max_product = nums[0]
+        	c_max = 1
+        	c_min = 1
+
+        	for n in nums:
+            		temp_max = n * c_max
+            		c_max = max(n, n * c_max, n * c_min)
+            		c_min = min(n, temp_max, n * c_min)
+
+            		max_product = max(max_product, c_max)
+			
+        	return max_product
