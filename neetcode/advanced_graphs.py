@@ -212,3 +212,39 @@ class Solution:
 			if not dfs(c):
 				return ''
 		return order
+
+	def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+		'''Cheapest flights within k hops
+
+  		Space Complexity: O(n) -> Flights
+    		Time Complexity: O (n * log n) -> Heap IO
+
+      		Args:
+			n (int): Number of flights
+   			flights (list): Flight routes
+      			src (int): Source 
+	 		dst (int): Destination
+    			k (int): Maximum hops
+
+       		Returns:
+	 		price (int): Cheapest price
+    		'''
+        	paths = {i: [] for i in range(n)}
+
+        	for fi, ti, pi in flights:
+            		paths[fi].append((pi, ti))
+
+        	min_heap = [(0, 0, src)]
+
+        	while min_heap:
+            		price, hops, port = heapq.heappop(min_heap)
+
+            		if port == dst:
+                		return price
+
+            		if hops > k:
+                		continue
+
+            		for next_p, next_d in paths[port]:
+                		heapq.heappush(min_heap, (price + next_p, hops + 1, next_d)) 
+        	return -1
