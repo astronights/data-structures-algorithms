@@ -78,3 +78,77 @@ class Solution:
      			max_money (int): Maximum money obtained
 		'''
         	return max(nums[0], self.rob(nums[1:]), self.rob(nums[:-1]))
+
+	def longestPalindrome(self, s: str) -> str:
+		'''Longest Palindrome
+
+    		Space Complexity: O(n) -> Palindrome string
+      		Time Complexity: O(n ^ 2) -> Iterating over all possibilities
+
+ 		Args:
+   			s (str): Iterable of characters to inspect
+
+      		Returns:
+			longest (str): Longest palindrome
+   		'''
+        	longest = ''
+
+		# Odd Lengths
+        	for ix in range(len(s)):
+            		side = 0
+            		while ix - side >= 0 and ix + side < len(s):
+                		cur = s[(ix - side):(ix + side + 1)]
+                		if cur == cur[::-1]:
+                    			side += 1
+                    			if len(cur) > len(longest):
+                        			longest = cur
+                		else:
+                    			break
+		# Even Lengths
+        	for ix in range(1, len(s)):
+            		side = 0
+            		while ix - side >= 0 and ix + side <= len(s):
+                		cur = s[(ix - side):(ix + side)]
+                		if cur == cur[::-1]:
+                    			side += 1
+                    			if len(cur) > len(longest):
+                        			longest = cur
+                		else:
+                    			break
+        	return longest
+
+	def countSubstrings(self, s: str) -> int:
+		'''Count Palindromic substrings
+
+  		Space Complexity: O(n) -> Palindrome string
+      		Time Complexity: O(n ^ 2) -> Iterating over all possibilities
+
+ 		Args:
+   			s (str): Iterable of characters to inspect
+
+      		Returns:
+			c (int): Number of palindromes
+   		'''
+        	c = 0
+
+		# Odd lengths
+        	for ix in range(len(s)):
+            		side = 0
+            		while ix - side >= 0 and ix + side < len(s):
+                		cur = s[(ix - side):(ix + side + 1)]
+                		if cur == cur[::-1]:
+                    			side += 1
+                    			c += 1
+                		else:
+                    			break
+		# Even Lengths
+        	for ix in range(1, len(s)):
+            		side = 1
+            		while ix - side >= 0 and ix + side <= len(s):
+                		cur = s[(ix - side):(ix + side)]
+                		if cur == cur[::-1]:
+                    			side += 1
+                    			c += 1
+                		else:
+                    			break
+        	return c
