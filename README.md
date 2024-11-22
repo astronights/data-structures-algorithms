@@ -19,6 +19,7 @@ Completed: **129 / 150**
 - Greedy
 - Graphs
 - Advanced Graphs
+- 1-D DP
 
 ## More
 
