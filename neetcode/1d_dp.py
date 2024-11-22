@@ -270,3 +270,27 @@ class Solution:
                 		if nums[j] < n:
                     			dp[i] = max(dp[i], dp[j] + 1)
         	return max(dp)
+
+	def canPartition(self, nums: List[int]) -> bool:
+		'''Check if array can be partitioned into equal sum subsets
+
+   		Space Complexity: O(n) -> DP Array
+     		Time Complexity: O(n) -> Single Pass
+
+       		Args:
+	 		nums (list): Iterable of numbers
+
+    		Returns:
+      			can_part (bool): If equal sum partition is possible
+	 	'''
+        	if sum(nums) % 2:
+            		return False
+
+        	target = sum(nums) // 2
+        	dp = [False] * (target + 1)
+        	dp[0] = True
+
+        	for n in nums:
+            		for i in range(target, n - 1, -1):
+                		dp[i] = dp[i] or dp[i - n]
+        	return dp[-1]
