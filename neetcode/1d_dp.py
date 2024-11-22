@@ -97,7 +97,7 @@ class Solution:
         	for ix in range(len(s)):
             		side = 0
             		while ix - side >= 0 and ix + side < len(s):
-                		cur = s[(ix - side):(ix + side + 1)]
+                		cur = s[(ix - side): (ix + side + 1)]
                 		if cur == cur[::-1]:
                     			side += 1
                     			if len(cur) > len(longest):
@@ -108,7 +108,7 @@ class Solution:
         	for ix in range(1, len(s)):
             		side = 0
             		while ix - side >= 0 and ix + side <= len(s):
-                		cur = s[(ix - side):(ix + side)]
+                		cur = s[(ix - side): (ix + side)]
                 		if cur == cur[::-1]:
                     			side += 1
                     			if len(cur) > len(longest):
@@ -135,7 +135,7 @@ class Solution:
         	for ix in range(len(s)):
             		side = 0
             		while ix - side >= 0 and ix + side < len(s):
-                		cur = s[(ix - side):(ix + side + 1)]
+                		cur = s[(ix - side): (ix + side + 1)]
                 		if cur == cur[::-1]:
                     			side += 1
                     			c += 1
@@ -145,10 +145,33 @@ class Solution:
         	for ix in range(1, len(s)):
             		side = 1
             		while ix - side >= 0 and ix + side <= len(s):
-                		cur = s[(ix - side):(ix + side)]
+                		cur = s[(ix - side): (ix + side)]
                 		if cur == cur[::-1]:
                     			side += 1
                     			c += 1
                 		else:
                     			break
         	return c
+
+	def numDecodings(self, s: str) -> int:
+		'''Number of ways to decode string
+
+    		Space Complexity: O(n) -> DP Array
+      		Time Complexity: O(n) -> Single Pass
+
+  		Args:
+    			s (str): Iterable of numbers
+
+       		Returns:
+	 		n_ways (int): Number of ways
+    		'''
+		n = len(s)
+        	ways = [0] * (n + 1)
+		
+        	ways[-1] = 1
+            	for i in range(n - 1, -1, -1):
+            		if s[i] != '0':
+                		ways[i] = ways[i+1]
+                		if i < n - 1 and int(s[i: i + 2]) < 27:
+                    			ways[i] += ways[i + 2]
+        	return ways[0]
