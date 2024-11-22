@@ -27,7 +27,7 @@ class Solution:
 	def minCostClimbingStairs(self, cost: List[int]) -> int:
 		'''Minimum cost to climb stairs
 
-  		Space Complexity: O(n) -> Cost Array
+  		Space Complexity: O(n) -> DP Array
     		Time Complexity: O(n) -> Single Pass
 
       		Args:
@@ -45,7 +45,7 @@ class Solution:
 	def rob(self, nums: List[int]) -> int:
 		'''Maximum money obtained from non-consecutive houses
 
-  		Space Complexity: O(n) -> Money Array
+  		Space Complexity: O(n) -> DP Array
     		Time Complexity: O(n) -> Single Pass
 
 		Args:
@@ -68,7 +68,7 @@ class Solution:
 	def rob_round(self, nums: List[int]) -> int:
 		'''Maximum money obtained from circular arrangement of houses
 
-  		Space Complexity: O(n) -> Money Array
+  		Space Complexity: O(n) -> DP Array
     		Time Complexity: O(n) -> Single Pass (Twice)
 
       		Args:
@@ -175,3 +175,28 @@ class Solution:
                 		if i < n - 1 and int(s[i: i + 2]) < 27:
                     			ways[i] += ways[i + 2]
         	return ways[0]
+
+	def coinChange(self, coins: List[int], amount: int) -> int:
+		'''Minimum number of coins required
+
+  		Space Complexity: O(n) -> DP Array
+    		Time Complexity: O(n * k) -> Iteration
+
+      		Values: Amount (n), Number of coins (k)
+
+ 		Args:
+   			coins (list): Iterable of available coins
+      			amount (int): Amount to achieve
+
+  		Returns:
+    			min_coins (int): Minimum number of coins needed
+       		'''
+        	dp = [10001] * (amount + 1) # Maximum amount 10000
+        	dp[0] = 0
+
+        	for val in range(1, amount + 1):
+            		for c in coins:
+                		if c <= val:
+                    			dp[val] = min(dp[val], dp[val - c] + 1)
+        	
+		return dp[-1] if dp[-1] < 10001 else -1
