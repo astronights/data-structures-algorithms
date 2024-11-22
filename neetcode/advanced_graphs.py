@@ -150,3 +150,65 @@ class Solution:
                 	if nx >= 0 and nx < R and ny >= 0 and ny < C:
                     		heapq.heappush(min_heap, (max(t, grid[nx][ny]), nx, ny))
 				
+	def foreignDictionary(self, words: List[str]) -> str:
+		'''Build Foreign Language dictionary from words
+
+  		Space Complexity: O(V + E) -> Mapping Dictionary
+    		Time Complexity: O(N + V + E) -> Topological Sort
+
+      		Values: Unique characters (V), Edges (E), Total length of all strings (N)
+
+      		Args:
+			words (list): Iterable of words
+
+   		Returns:
+     			order (str): Dictionary order
+		'''
+		d = {}
+
+		# Building dictionary
+		for word in words:
+            		for c in word: 
+                		d[c] = set()
+
+        	for i in range(len(words) - 1):
+            		a, b = words[i], words[i + 1]
+
+            		for j in range(min(len(a), len(b))):
+                		if a[j] != b[j]:
+                    			d[a[j]].add(b[j])
+                    			break
+			else:
+				if len(a) > len(b):
+					return ''
+
+		# Topological Sort
+		order = []
+		visited = {}
+
+		def dfs(cur: str):
+			'''DFS through nodes
+
+   			Args:
+      				cur (str): Character
+
+   			Returns:
+      				is_valid (bool): If tree is valid
+	  		'''
+			if cur in visited:
+				return visited[cur]
+
+			visited[cur] = False
+
+			for letter in d[cur]:
+				if not dfs(letter):
+					return False
+			visited[cur] = True
+
+			order.append(cur)
+			return True
+
+		for c in d:
+			if not dfs(c):
+				return ''
+		return order
