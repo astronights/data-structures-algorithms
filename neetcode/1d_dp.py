@@ -250,3 +250,23 @@ class Solution:
                 		if i >= size and s[i - size: i] == word:
                     			dp[i] = dp[i] or dp[i - size]
         	return dp[-1]
+
+	def lengthOfLIS(self, nums: List[int]) -> int:
+		'''Length of longest increasing subsequence
+
+  		Space Complexity: O(n) -> DP Array
+    		Time Complexity: O(n ^ 2) -> Iteration
+
+      		Args:
+			nums (list): Iterable of numbers
+
+   		Returns:
+     			max_length (int): Length of longest increasing subsequence
+		'''
+        	dp = [1] * len(nums)
+
+        	for i, n in enumerate(nums):
+            		for j in range(i):
+                		if nums[j] < n:
+                    			dp[i] = max(dp[i], dp[j] + 1)
+        	return max(dp)
