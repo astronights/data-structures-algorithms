@@ -298,3 +298,27 @@ class Solution:
                 		else:
                     			dp[i][j] = 1 + min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1])
         	return dp[-1][-1]
+
+	def maxCoins(self, nums: List[int]) -> int:
+		'''Maximum coins from popping balloons
+
+  		Space Complexity: O(n ^ 2) -> DP Array
+    		Time Complexity: O(n ^ 3) -> Iterations
+
+      		Args:
+			nums (list): Iterable of balloons
+
+   		Returns:
+     			max_coins (int): Maximum coins
+		'''
+        	n = len(nums)
+        	vals = [1] + nums + [1]
+        	dp = [[0] * (n + 2) for _ in range(n + 2)]
+
+        	for l in range(n, 0, -1):
+            		for r in range(l, n + 1):
+                		for i in range(l, r + 1):
+                    			coins = vals[l - 1] * vals[i] * vals[r + 1]
+                    			coins += dp[l][i - 1] + dp[i + 1][r]
+                    			dp[l][r] = max(dp[l][r], coins)
+        	return dp[1][n]
