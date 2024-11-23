@@ -137,3 +137,36 @@ class Solution:
             		out.append(1)
 
         	return out[::-1]
+
+	def myPow(self, x: float, n: int) -> float:
+		'''Calculate power of a number
+
+  		Space Complexity: O(log n) -> Binary Exponentiation
+    		Time Complexity: O(log n) -> Binary Exponentiation
+
+      		Args:
+			x (float): Number
+   			n (int): Exponent
+
+      		Returns:
+			out (float): Exponentiated number
+   		'''
+        	def helper(x: float, n: int) -> float:
+			'''Helper function
+
+   			Args:
+				x (float): Number
+   				n (int): Exponent
+
+      			Returns:
+				out (float): Exponentiated number
+    			'''
+            		if x == 0:
+                		return 0
+            		elif n == 0:
+                		return 1
+            		out = pow(x ** 2, n // 2)
+            		return x * out if n % 2 else out
+
+        	out = helper(x, abs(n))
+        	return out if n >= 0 else 1 / out
