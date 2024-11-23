@@ -1,4 +1,5 @@
 # Bit Manipulation Solutions
+import math
 
 class Solution:
 	# Solution Functions
@@ -118,3 +119,31 @@ class Solution:
             		b = carry & mask
 
         	return a if a <= MAX_INT else ~(a ^ mask)
+
+	def reverse(self, x: int) -> int:
+		'''Reverse number without going out of 32 bit bounds
+
+  		Space Complexity: O(1) -> Single numbers
+    		Time Complexity: O(1) -> Number digit iteration
+
+      		Args:
+			x (int): Number
+
+   		Returns:
+     			out (int): Reversed number
+		'''
+        	MIN = - 2 ** 31
+        	MAX = 2 ** 31 - 1
+		
+        	out = 0
+        
+		while x != 0:
+            		remainder = int(math.fmod(x, 10))
+            		x = int(x / 10)
+
+            		if out > MAX // 10 or (out == MAX // 10 and remainder > MAX % 10):
+                		return 0
+            		elif out < MIN // 10 or (out == MIN // 10 and remainder < MIN % 10):
+                		return 0
+            		out = out * 10 + remainder
+        	return out 
