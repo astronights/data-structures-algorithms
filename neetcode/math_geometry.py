@@ -50,3 +50,38 @@ class Solution:
             		if nx < 0 or nx >= R or ny < 0 or ny >= C or matrix[nx][ny] is None:
                 		c = (c + 1) % 4
         	return out
+
+	def setZeroes(self, matrix: List[List[int]]) -> None:
+		'''Set Matrix Zeroes
+
+  		Space Complexity: O(1) -> Constant space
+    		Time Complexity: O(m * n) -> Matrix dimensions
+
+      		Values: Matrix dimensions (m x n)
+
+      		Args:
+			matrix (list): Matrix
+   		'''
+        	first = False
+        	R, C = len(matrix), len(matrix[0])
+
+        	for i in range(R):
+            		for j in range(C):
+                		if matrix[i][j] == 0:
+                    			matrix[0][j] = 0
+                    			if i > 0:
+                        			matrix[i][0] = 0
+                    			else:
+                        			first = True
+        
+        	for i in range(1, R):
+            		for j in range(1, C):
+                		if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    			matrix[i][j] = 0
+
+        	if matrix[0][0] == 0:
+            		for i in range(R):
+                		matrix[i][0] = 0
+
+        	if first:
+            		matrix[0] = [0] * C
