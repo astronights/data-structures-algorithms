@@ -4,7 +4,7 @@ My solutions to common DSA problems to keep me well-equipped with Data Structure
 
 ## Neetcode 150
 
-Completed: **135 / 150**
+Completed: **142 / 150**
 
 - Arrays & Hashing
 - Two Pointers
@@ -21,6 +21,7 @@ Completed: **135 / 150**
 - Advanced Graphs
 - 1-D DP
 - 2-D DP
+- Bit Manipulation
 
 ## More
 
