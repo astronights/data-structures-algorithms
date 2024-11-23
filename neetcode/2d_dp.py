@@ -122,3 +122,40 @@ class Solution:
             		for i in range(c, amount + 1):
                 		dp[i] += dp[i - c]
         	return dp[-1]
+
+	def findTargetSumWays(self, nums: List[int], target: int) -> int:
+		'''Find Ways to Target Sum
+
+    		Space Complexity: O(n) -> DP Array
+      		Time Complexity: O(n * k) -> Iteration
+
+ 		Values: Numbers (n), Sum of all numbers (k)
+
+   		Args:
+     			nums (list): Iterable of numbers
+			target (int): Target number
+
+   		Returns:
+     			n_ways (int): Number of ways to sum
+		'''
+        	dp = {}
+        
+		def dfs(i: int, total: int) -> int:
+			'''DFS through number sums
+
+   			Args:
+      				i (int): Index
+	  			total (int): Running sum
+
+      			Returns:
+	 			n_ways (int): Number of ways
+     			'''
+            		if i == len(nums):
+                		return 1 if total == target else 0
+            		if (i, total) in dp:
+                		return dp[(i, total)]
+
+            		dp[(i, total)] = dfs(i + 1, total + nums[i]) + dfs(i + 1,total - nums[i])
+            		return dp[(i, total)]
+
+        	return dfs(0, 0)
