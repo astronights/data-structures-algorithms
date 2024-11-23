@@ -159,3 +159,36 @@ class Solution:
             		return dp[(i, total)]
 
         	return dfs(0, 0)
+
+	def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+		'''If string can be formed by interleaving others
+
+  		Space Complexity: O(m * n) -> DP Array
+    		Time Complexity: O(m * n) -> Single Pass
+
+      		Values: Lengths of smaller strings (m, n)
+
+ 		Args:
+   			s1 (str): Iterable of characters 1
+      			s2 (str): Iterable of characters 2
+	 		s3 (str): Iterable to check interleaving on
+
+    		Returns:
+      			is_interleave (bool): If strings can interleave to form target
+	 	'''
+        	m, n = len(s1), len(s2)
+
+        	dp = [[False] * (n + 1) for _ in range(m + 1)]
+        	dp[0][0] = True
+
+        	for i in range(1, m + 1):
+            		dp[i][0] = (s1[i - 1] == s3[i - 1]) and dp[i - 1][0]
+        	for i in range(1, n + 1):
+            		dp[0][i] = (s2[i - 1] == s3[i - 1]) and dp[0][i - 1]
+
+        	for i in range(1, m + 1):
+            		for j in range(1, n + 1):
+                		check_1 = (s1[i - 1] == s3[i + j - 1]) and dp[i - 1][j]
+                		check_2 = (s2[j - 1] == s3[i + j - 1]) and dp[i][j - 1]
+                		dp[i][j] = check_1 or check_2
+        	return dp[-1][-1]
