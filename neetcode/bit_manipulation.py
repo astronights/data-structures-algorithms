@@ -37,3 +37,25 @@ class Solution:
             		n = n & (n - 1)
             		c += 1
         	return c
+
+	def countBits(self, n: int) -> List[int]:
+		'''Count 1 bits in all numbers
+
+  		Space Complexity: O(n) -> Result
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			n (int): Range of numbers
+
+   		Returns:
+     			out (list): 1 Bit Counts
+		'''
+        	ix = 2
+        	out = [0]
+        
+		for i in range(1, n + 1):
+			out.append(1 + out[i - ix])
+			
+            		if i == ix:
+                		ix *= 2
+        	return out
