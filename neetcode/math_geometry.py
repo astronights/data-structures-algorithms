@@ -108,3 +108,32 @@ class Solution:
             		if n == 1:
                 		return True
         	return False
+
+	def plusOne(self, digits: List[int]) -> List[int]:
+		'''Add one to array of digits
+
+  		Space Complexity: O(n) -> Digits
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			digits (list): Iterable of digits
+
+     		Returns:
+       			out (list): Incremented number
+	  	'''
+        	out = []
+        	done = False
+        
+		for n in digits[::-1]:
+            		if done:
+                		out.append(n)
+            		else:
+                		if n < 9:
+                    			out.append(n + 1)
+                    			done = True
+                		else:
+                    			out.append(0)
+        	if out[-1] == 0:
+            		out.append(1)
+
+        	return out[::-1]
