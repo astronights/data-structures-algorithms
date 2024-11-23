@@ -78,3 +78,20 @@ class Solution:
             		bit = (n >> i) & 1
             		out += (bit << (31 - i))
         	return out
+
+	def missingNumber(self, nums: List[int]) -> int:
+		'''Find missing number from range of numbers
+
+  		Space Complexity: O(1) -> Single number
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			nums (list): Iterable of numbers
+
+   		Returns:
+     			res (int): Missing number
+		'''
+        	res = 0
+        	for i, n in enumerate(nums):
+            		res += i + 1 - n
+        	return res
