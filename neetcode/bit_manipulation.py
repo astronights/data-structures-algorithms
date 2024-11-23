@@ -95,3 +95,26 @@ class Solution:
         	for i, n in enumerate(nums):
             		res += i + 1 - n
         	return res
+
+	def getSum(self, a: int, b: int) -> int:
+		'''Sum of two numbers without +
+
+  		Space Complexity: O(1) -> Constants
+    		Time Complexity: O(1) -> Bit iteration
+
+      		Args:
+			a (int): Number 1
+   			b (int): Number 2
+
+      		Returns:
+			total (int): Sum of numbers
+   		'''
+        	mask = 0xFFFFFFFF
+        	MAX_INT = 0x7FFFFFFF
+        
+        	while b != 0:
+            		carry = (a & b) << 1
+            		a = (a ^ b) & mask
+            		b = carry & mask
+
+        	return a if a <= MAX_INT else ~(a ^ mask)
