@@ -322,3 +322,34 @@ class Solution:
                     			coins += dp[l][i - 1] + dp[i + 1][r]
                     			dp[l][r] = max(dp[l][r], coins)
         	return dp[1][n]
+
+	def isMatch(self, s: str, p: str) -> bool:
+		'''Regex Matching with wildcard 
+
+  		Space Complexity: O(m * n) -> DP Array
+    		Time Complexity: O(m * n) -> Single Pass
+
+	 	Values: Length of s(m), length of regex (n)
+
+   		Args:
+     			s (str): Iterable of characters
+			p (str): Regex
+
+   		Returns:
+     			is_match (bool): Is a regex match
+		'''
+        	m, n = len(s), len(p)
+        	dp = [[False] * (n + 1) for _ in range(m + 1)]
+
+        	dp[0][0] = True
+        	for i in range(1, n + 1):
+            		dp[0][i] = (p[i-1] == '*') and dp[0][i - 2]
+        
+        	for i in range(1, m + 1):
+            		for j in range(1, n + 1):
+                		if p[j - 1] == '*':
+                    			dp[i][j] = dp[i][j - 2] or (dp[i - 1][j] and 
+								    (p[j - 2] == s[i - 1] or p[j - 2] == '.'))
+                		else:
+                    			dp[i][j] = dp[i - 1][j - 1] and (p[j - 1] == s[i - 1] or p[j - 1] == '.')
+        	return dp[-1][-1]
