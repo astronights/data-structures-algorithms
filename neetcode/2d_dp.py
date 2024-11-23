@@ -192,3 +192,50 @@ class Solution:
                 		check_2 = (s2[j - 1] == s3[i + j - 1]) and dp[i][j - 1]
                 		dp[i][j] = check_1 or check_2
         	return dp[-1][-1]
+
+	def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+		'''Longest increasing path in matrix
+
+  		Space Complexity: O(m * n) -> DP Array
+    		Time Complexity: O(m * n)-> DFS
+
+      		Values: Matrix dimensions (m x n)
+
+      		Args:
+			matrix (list): Grid of values
+
+   		Returns:
+     			longest (int): Length of longest path
+		'''
+        	dp = {}
+        	R, C = len(matrix), len(matrix[0])
+
+        	def dfs(x: int, y: int, val: int) -> int:
+			'''DFS through matrix
+
+   			Args:
+      				x (int): Row index
+	  			y (int): Column index
+      				val (int): Previous value
+
+   			Returns:
+      				longest (int): Longest path length
+	  		'''
+            		if x < 0 or x >= R or y < 0 or y >= C or matrix[x][y] <= val:
+                		return 0
+            		if (x, y) in dp:
+                		return dp[(x, y)]
+
+            		cur = matrix[x][y]
+
+            		longest = 1 + max(dfs(x + 1, y, cur), dfs(x - 1, y, cur),
+					  dfs(x, y + 1, cur), dfs(x, y - 1, cur))
+
+            		dp[(x, y)] = longest
+            		return longest
+
+        	for i in range(R):
+            		for j in range(C):
+                		dfs(i, j, -1)
+
+        	return max(dp.values())
