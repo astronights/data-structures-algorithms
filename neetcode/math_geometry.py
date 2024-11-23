@@ -85,3 +85,26 @@ class Solution:
 
         	if first:
             		matrix[0] = [0] * C
+
+	def isHappy(self, n: int) -> bool:
+		'''Happy (Non-Cyclical) Number
+
+  		Space Complexity: O(n) -> Hash Set
+		Time Comeplexity: O(n) -> Iteration
+
+  		Values: Numbers on the cyclical path (n)
+
+    		Args:
+      			n (int): Number
+
+  		Returns:
+    			is_happy (bool): If number is happy number
+       		'''
+        	seen = set()
+        	
+		while n not in seen:
+            		seen.add(n)
+            		n = sum(int(x)**2 for x in str(n))
+            		if n == 1:
+                		return True
+        	return False
