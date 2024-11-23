@@ -1,4 +1,5 @@
 # Math & Geometry Solutions
+from collections import defaultdict
 
 class Solution:
 	# Solution Functions
@@ -201,3 +202,45 @@ class Solution:
                 		out[i + j] %= 10
 
         	return ''.join(str(x) for x in out).rstrip('0')[::-1]
+
+
+class CountSquares:
+
+	def __init__(self):
+		'''Count number of squares
+
+  		Space Complexity: O(n) -> Points
+    		'''
+        	self.counter = defaultdict(int)
+        	self.points = []
+
+	def add(self, point: List[int]) -> None:
+		'''Add point
+
+  		Time Complexity: O(1) -> Append
+
+    		Args:
+      			point (list): Co-ordinates
+		'''
+        	self.counter[tuple(point)] += 1
+        	self.points.append(point)
+
+    	def count(self, point: List[int]) -> int:
+		'''Count number of squares with point
+
+  		Time Complexity: O(n) -> Point Iteration
+
+    		Args:
+      			point (list): Co-ordinates
+
+  		Returns:
+    			out (int): Number of squares
+       		'''
+        	out = 0
+        	px, py = point
+
+		for x, y in self.points:
+            		if abs(x - px) != abs(y - py) or x == px or y == py:
+                		continue
+            		out += self.counter[(x, py)] * self.counter[(px, y)]
+        	return out
