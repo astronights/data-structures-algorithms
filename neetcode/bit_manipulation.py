@@ -59,3 +59,22 @@ class Solution:
             		if i == ix:
                 		ix *= 2
         	return out
+
+ 	def reverseBits(self, n: int) -> int:
+		'''Reverse Bits
+
+  		Space Complexity: O(1) -> Single number
+    		Time Complexity: O(1) -> 32 bit iteration
+
+      		Args:
+			n (int): Input number
+
+   		Returns:
+     			out (int): Number with reversed bits
+		'''
+       		out = 0
+        	
+		for i in range(32):
+            		bit = (n >> i) & 1
+            		out += (bit << (31 - i))
+        	return out
