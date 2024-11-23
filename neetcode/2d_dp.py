@@ -99,3 +99,26 @@ class Solution:
             		return dp[(i, buy)]
 			
         	return dfs(0, True)
+
+	def change(self, amount: int, coins: List[int]) -> int:
+		'''Distinct ways to change coins
+
+  		Space Complexity: O(n) -> DP Array
+    		Time Complexity: O(n * k) -> Coin Iteration
+
+      		Values: Amount (n), number of coins (k)
+
+ 		Args:
+   			amount (int): Money available
+      			coins (list): Iterable of coins
+
+  		Returns:
+    			n_ways (int): Number of ways
+       		'''
+        	dp = [0] * (amount + 1)
+        	dp[0] = 1
+
+        	for c in coins:
+            		for i in range(c, amount + 1):
+                		dp[i] += dp[i - c]
+        	return dp[-1]
