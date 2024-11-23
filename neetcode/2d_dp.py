@@ -56,3 +56,46 @@ class Solution:
                 		else:
                     			dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
         	return dp[-1][-1]
+
+	def maxProfit(self, prices: List[int]) -> int:
+		'''Maximum profit with cooldown
+
+    		Space Complexity: O(n) -> DP Array
+      		Time Complexity: O(n) -> Single Pass
+
+ 		Args:
+   			prices (list): Iterable of prices
+
+		Returns:
+  			max_profit (int): Maximum profit
+     		'''
+        	n = len(prices)
+        	dp = {}
+
+        	def dfs(i: int, buy: bool) -> int:
+			'''DFS through days
+
+   			Args:
+      				i (int): Day index
+	  			buy (bool): Buy / Sell
+
+      			Returns:
+	 			max_profit (int): Maximum profit
+     			'''
+            		if i >= n:
+                		return 0
+            		if (i, buy) in dp:
+                		return dp[(i, buy)]
+
+            		cooldown = dfs(i + 1, buy)
+
+            		if buy:
+                		profit = dfs(i + 1, False) - prices[i]
+                		dp[(i, buy)] = max(profit, cooldown)
+            		else:
+                		profit = dfs(i + 2, True) + prices[i]
+                		dp[(i, buy)] = max(profit, cooldown)
+
+            		return dp[(i, buy)]
+			
+        	return dfs(0, True)
