@@ -170,3 +170,34 @@ class Solution:
 
         	out = helper(x, abs(n))
         	return out if n >= 0 else 1 / out
+
+	def multiply(self, num1: str, num2: str) -> str:
+		'''Multiply two strings
+
+  		Space Complexity: O(m + n) -> Product
+    		Time Complexity: O(m * n) -> Multiplication
+
+		Values: Digits in num1 (m), digits in num2 (n)
+
+  		Args:
+    			num1 (str): Number 1
+       			num2 (str): Number 2
+
+   		Returns:
+     			prod (str): Product
+		'''
+        	if num1 == '0' or num2 == '0':
+            		return '0'
+        
+		a, b = len(num1), len(num2)
+        	out = [0] * (a + b + 2)
+        	num1, num2 = num1[::-1], num2[::-1]
+
+        	for i in range(a):
+            		for j in range(b):
+                		prod = int(num1[i]) * int(num2[j])
+                		out[i + j] += prod
+                		out[i + j + 1] += out[i + j] // 10
+                		out[i + j] %= 10
+
+        	return ''.join(str(x) for x in out).rstrip('0')[::-1]
