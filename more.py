@@ -89,3 +89,35 @@ class Solution:
     		if l and r:
       			return root
     		return l or r
+
+	def calculate(self, s: str) -> int:
+		'''Basic addition and subtraction calculator
+
+  		Space Complexity: O(n) -> Stack
+    		Time Complexity: O(n) -> Single Pass
+
+      		Args:
+			s (str): String to evaluate
+
+   		Returns:
+     			res (int): Evaluated result
+		'''
+        	num = 0
+        	sign = 1
+        	stack = [1,]
+
+		res = 0
+        	
+		for c in s:
+            		if '0' <= c <= '9':
+                		num = 10 * num + int(c)
+            		elif c in '-+':
+                		res += sign * num
+                		sign = (-1 if c == '-' else 1) * stack[-1]
+                		num = 0
+            		elif c == '(':
+                		stack.append(sign)
+            		elif c == ')':
+                		stack.pop()  
+        	
+		return res + num * sign
